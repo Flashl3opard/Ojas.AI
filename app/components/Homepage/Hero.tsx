@@ -4,7 +4,6 @@ import Link from "next/link";
 export default function Hero() {
   return (
     <section className="flex flex-col md:flex-row items-center justify-between px-6 md:px-20 py-16 bg-white">
-      {/* Text */}
       <div className="max-w-xl space-y-6">
         <h1 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight">
           Cloud-based Ayurvedic Diet Plan Recommendation System
@@ -21,7 +20,6 @@ export default function Hero() {
         </Link>
       </div>
 
-      {/* Image */}
       <div className="mt-10 md:mt-0">
         <Image
           src="/images/homepage1.svg"

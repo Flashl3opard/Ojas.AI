@@ -29,7 +29,6 @@ export default function DoshaCard({
           flipped ? "rotate-y-180" : ""
         }`}
       >
-        {/* Front side */}
         <div
           className={`absolute w-full h-full ${color} rounded-2xl flex flex-col items-center justify-center shadow-lg backface-hidden p-6`}
         >
@@ -40,7 +39,6 @@ export default function DoshaCard({
           </p>
         </div>
 
-        {/* Back side */}
         <div className="absolute w-full h-full bg-white rounded-2xl shadow-lg backface-hidden rotate-y-180 p-6 flex flex-col justify-between">
           <div>
             <h4 className="text-lg font-semibold mb-2">{name} Traits</h4>
@@ -60,7 +58,6 @@ export default function DoshaCard({
         </div>
       </div>
 
-      {/* Extra styles */}
       <style jsx>{`
         .perspective {
           perspective: 1000px;

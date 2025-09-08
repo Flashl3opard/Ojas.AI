@@ -20,7 +20,6 @@ export default function Navbar() {
         </li>
       </ul>
 
-      {/* Login Button */}
       <Link
         href="/login"
         className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition"
