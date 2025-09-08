@@ -12,16 +12,16 @@ The proposed solution should provide an intuitive platform tailored for Ayurvedi
 
 ## Key Features:
 
-• Scientifically calculated nutrient data for diverse food categories, customized for men, women, and children across all age groups.
-• A dynamic food database of 8,000+ items covering Indian, multicultural, and international cuisines for wide applicability.
-• Automated diet chart generation with nutritionally balanced, Ayurveda-compliant plans in a clear, organized format.
-• Comprehensive patient management module, including profiles with age, gender, dietary habits, meal frequency, bowel movements, water intake, and other critical health parameters.
-• Recipe-based diet charts with automated nutrient analysis to provide detailed, actionable guidance for patients.
+- Scientifically calculated nutrient data for diverse food categories, customized for men, women, and children across all age groups.
+- A dynamic food database of 8,000+ items covering Indian, multicultural, and international cuisines for wide applicability.
+- Automated diet chart generation with nutritionally balanced, Ayurveda-compliant plans in a clear, organized format.
+- Comprehensive patient management module, including profiles with age, gender, dietary habits, meal frequency, bowel movements, water intake, and other critical health parameters.
+- Recipe-based diet charts with automated nutrient analysis to provide detailed, actionable guidance for patients.
 
 ## Additional Features:
 
-• Security & Compliance: Ensure patient data privacy, adhering to health data regulations (e.g., HIPAA or local laws).
-• User Experience (UX): A clean, user-friendly interface with customization to match Ayurvedic practitioners’ workflows.
-• Integration Potential: Capability to integrate with hospital information systems (HIS) or electronic health records (EHR).
-• Mobile Support: Compatibility with mobile and tablet devices for on-the-go usage by doctors and patients.
-• Reporting Tools: Ability to generate printable diet charts and reports for patient handouts.
+- Security & Compliance: Ensure patient data privacy, adhering to health data regulations (e.g., HIPAA or local laws).
+- User Experience (UX): A clean, user-friendly interface with customization to match Ayurvedic practitioners’ workflows.
+- Integration Potential: Capability to integrate with hospital information systems (HIS) or electronic health records (EHR).
+- Mobile Support: Compatibility with mobile and tablet devices for on-the-go usage by doctors and patients.
+- Reporting Tools: Ability to generate printable diet charts and reports for patient handouts.
