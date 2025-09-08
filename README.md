@@ -1,36 +1,27 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## Background
 
-## Getting Started
+Currently, in Ayurvedic hospitals, diet charts are prescribed manually by doctors in handwritten form, tailored to each patient’s needs. Existing software solutions primarily focus on macro- and micro-nutrient tracking but fail to align with Ayurvedic nutritional concepts. This gap creates inefficiencies, reduces accuracy, and makes it harder for practitioners to deliver holistic dietary care rooted in Ayurveda.
 
-First, run the development server:
+# Detailed Description
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+The problem envisages the development of a dedicated Ayurvedic Diet Management Software designed to efficiently create, manage, and organize patient-specific diet charts with both accuracy and ease. Unlike conventional nutrition tools, the platform will integrate modern nutritional metrics with Ayurvedic dietary principles—such as caloric value, food properties (Hot/Cold, Easy/Difficult to digest), and the six tastes (Rasa).
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+# Expected Solution
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The proposed solution should provide an intuitive platform tailored for Ayurvedic dietitians, enabling quick food input, comprehensive nutrient tracking, and Ayurvedic dietary categorization.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# Key Features:
 
-## Learn More
+• Scientifically calculated nutrient data for diverse food categories, customized for men, women, and children across all age groups.
+• A dynamic food database of 8,000+ items covering Indian, multicultural, and international cuisines for wide applicability.
+• Automated diet chart generation with nutritionally balanced, Ayurveda-compliant plans in a clear, organized format.
+• Comprehensive patient management module, including profiles with age, gender, dietary habits, meal frequency, bowel movements, water intake, and other critical health parameters.
+• Recipe-based diet charts with automated nutrient analysis to provide detailed, actionable guidance for patients.
 
-To learn more about Next.js, take a look at the following resources:
+# Additional Features:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+• Security & Compliance: Ensure patient data privacy, adhering to health data regulations (e.g., HIPAA or local laws).
+• User Experience (UX): A clean, user-friendly interface with customization to match Ayurvedic practitioners’ workflows.
+• Integration Potential: Capability to integrate with hospital information systems (HIS) or electronic health records (EHR).
+• Mobile Support: Compatibility with mobile and tablet devices for on-the-go usage by doctors and patients.
+• Reporting Tools: Ability to generate printable diet charts and reports for patient handouts.
