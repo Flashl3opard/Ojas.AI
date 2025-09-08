@@ -1,14 +1,10 @@
 import Link from "next/link";
+import Logo from "./Logo";
 
 export default function Navbar() {
   return (
     <nav className="flex items-center justify-between py-4 px-6 shadow-sm bg-white">
-      {/* Logo */}
-      <div className="flex items-center space-x-2">
-        <span className="text-green-600 font-bold text-xl">🌿 Ayurveda</span>
-      </div>
-
-      {/* Links */}
+      <Logo />
       <ul className="hidden md:flex space-x-8 text-gray-700 font-medium">
         <li>
           <Link href="/">Home</Link>

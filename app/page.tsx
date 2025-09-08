@@ -1,6 +1,7 @@
 import Navbar from "./components/Navbar";
-import Hero from "./components/Hero";
-import HowItWorks from "./components/HowItWorks";
+import Hero from "./components/Homepage/Hero";
+import HowItWorks from "./components/Homepage/HowItWorks";
+import DoshaEducation from "./components/Homepage/DoshaEducation";
 
 export default function Home() {
   return (
@@ -9,6 +10,7 @@ export default function Home() {
         <Navbar />
         <Hero />
         <HowItWorks />
+        <DoshaEducation />
       </main>
     </>
   );
