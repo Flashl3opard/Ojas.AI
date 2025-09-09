@@ -14,6 +14,7 @@ const doshas = [
     ],
     color: "bg-blue-200",
     icon: <Droplet className="w-8 h-8 text-blue-600" />,
+    info: "Balanced Vata gives inspiration and flexibility. Imbalance may cause anxiety, irregular digestion, or sleep issues.",
   },
   {
     name: "Pitta",
@@ -27,6 +28,7 @@ const doshas = [
     ],
     color: "bg-red-200",
     icon: <Flame className="w-8 h-8 text-red-600" />,
+    info: "Balanced Pitta builds confidence and sharp intellect. Imbalance may show as anger, skin rashes, or overheating.",
   },
   {
     name: "Kapha",
@@ -40,23 +42,37 @@ const doshas = [
     ],
     color: "bg-green-200",
     icon: <Leaf className="w-8 h-8 text-green-600" />,
+    info: "Balanced Kapha provides compassion and resilience. Imbalance may cause sluggishness, excessive sleep, or congestion.",
   },
 ] as const;
 
 export default function DoshaEducation() {
   return (
     <section className="py-16 px-6 md:px-20 bg-white">
-      <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">
+      {/* Section Heading */}
+      <h2
+        className="text-3xl font-bold text-center text-gray-900 mb-12"
+        data-aos="fade-up"
+      >
         Discover Your Dosha
       </h2>
-      <p className="text-center text-gray-600 max-w-2xl mx-auto mb-12">
+
+      {/* Section Description */}
+      <p
+        className="text-center text-gray-600 max-w-2xl mx-auto mb-12"
+        data-aos="fade-up"
+        data-aos-delay="150"
+      >
         Ayurveda identifies three main body constitutions (Doshas). Click on a
         card to flip and learn more.
       </p>
 
+      {/* Dosha Cards Grid */}
       <div className="grid md:grid-cols-3 gap-8">
         {doshas.map((dosha, idx) => (
-          <DoshaCard key={idx} {...dosha} />
+          <div key={idx} data-aos="zoom-in" data-aos-delay={idx * 150}>
+            <DoshaCard {...dosha} />
+          </div>
         ))}
       </div>
     </section>

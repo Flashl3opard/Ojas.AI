@@ -21,12 +21,23 @@ const steps = [
 export default function HowItWorks() {
   return (
     <section className="py-16 px-6 md:px-20 bg-gray-50 text-center">
-      <h2 className="text-3xl font-bold text-gray-900 mb-12">How it works</h2>
-      <div className="grid md:grid-cols-3 gap-12">
+      <h2 className="text-3xl font-bold text-gray-900 mb-12" data-aos="fade-up">
+        How it works
+      </h2>
+      <div className="grid md:grid-cols-3 gap-8">
         {steps.map((step, idx) => (
-          <div key={idx} className="flex flex-col items-center space-y-4">
-            {step.icon}
-            <h3 className="text-xl font-semibold">{step.title}</h3>
+          <div
+            key={idx}
+            className="flex flex-col items-center space-y-4 bg-green-200 rounded-2xl shadow-sm p-6 border border-green-100 hover:shadow-md transition"
+            data-aos="fade-up"
+            data-aos-delay={idx * 200}
+          >
+            <div className="flex items-center justify-center w-16 h-16 bg-green-100 rounded-full">
+              {step.icon}
+            </div>
+            <h3 className="text-xl font-semibold text-gray-800">
+              {step.title}
+            </h3>
             <p className="text-gray-600">{step.desc}</p>
           </div>
         ))}

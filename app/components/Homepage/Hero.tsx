@@ -4,7 +4,11 @@ import Link from "next/link";
 export default function Hero() {
   return (
     <section className="flex flex-col md:flex-row items-center justify-between px-6 md:px-20 py-16 bg-white">
-      <div className="max-w-xl space-y-6">
+      <div
+        className="max-w-xl space-y-6"
+        data-aos="fade-right"
+        data-aos-delay="100"
+      >
         <h1 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight">
           Cloud-based Ayurvedic Diet Plan Recommendation System
         </h1>
@@ -20,7 +24,7 @@ export default function Hero() {
         </Link>
       </div>
 
-      <div className="mt-10 md:mt-0">
+      <div className="mt-10 md:mt-0" data-aos="fade-left" data-aos-delay="300">
         <Image
           src="/images/homepage1.svg"
           alt="Ayurvedic Diet Illustration"
