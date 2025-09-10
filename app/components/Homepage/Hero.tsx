@@ -5,12 +5,26 @@ export default function Hero() {
   return (
     <section className="flex flex-col md:flex-row items-center justify-between px-6 md:px-20 py-16 bg-white">
       <div
-        className="max-w-xl space-y-6"
-        data-aos="fade-right"
+        className="mb-8 md:mb-0 flex justify-center md:hidden"
+        data-aos="fade-down"
         data-aos-delay="100"
       >
-        <h1 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight">
-          Cloud-based Ayurvedic Diet Plan Recommendation System
+        <Image
+          src="/images/homepage1.svg"
+          alt="Ayurvedic Diet Illustration"
+          width={280}
+          height={280}
+          priority
+        />
+      </div>
+
+      <div
+        className="max-w-xl space-y-6 text-center md:text-left"
+        data-aos="fade-right"
+        data-aos-delay="200"
+      >
+        <h1 className="text-3xl md:text-5xl font-bold text-gray-900 leading-snug">
+          Cloud-based Ayurvedic <br /> Diet Plan Recommendation System
         </h1>
         <p className="text-gray-600 text-lg">
           Get personalized diet recommendations based on your unique body
@@ -24,7 +38,11 @@ export default function Hero() {
         </Link>
       </div>
 
-      <div className="mt-10 md:mt-0" data-aos="fade-left" data-aos-delay="300">
+      <div
+        className="hidden md:flex md:ml-10"
+        data-aos="fade-left"
+        data-aos-delay="300"
+      >
         <Image
           src="/images/homepage1.svg"
           alt="Ayurvedic Diet Illustration"
