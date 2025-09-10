@@ -20,12 +20,12 @@ const features = [
 
 export default function Features() {
   return (
-    <section className="py-16 px-6 md:px-20 bg-white text-center">
-      <h2 className="text-3xl font-bold text-gray-900 mb-12" data-aos="fade-up">
+    <section className="py-12 px-6 md:px-16 bg-[#ececec] text-center">
+      <h2 className="text-3xl font-bold text-gray-900 mb-8" data-aos="fade-up">
         Key Features
       </h2>
 
-      <div className="grid md:grid-cols-3 gap-8">
+      <div className="grid md:grid-cols-3 gap-6">
         {features.map((feature, idx) => (
           <div
             key={idx}
