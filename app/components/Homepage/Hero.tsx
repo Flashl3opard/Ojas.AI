@@ -3,17 +3,17 @@ import Link from "next/link";
 
 export default function Hero() {
   return (
-    <section className="flex flex-col md:flex-row items-center justify-between px-6 md:px-20 py-16 bg-white">
+    <section className="flex flex-col md:flex-row items-center justify-between px-3 pt-2 pb-2 md:px-38 py-20 bg-[#ececec]">
       <div
         className="mb-8 md:mb-0 flex justify-center md:hidden"
         data-aos="fade-down"
         data-aos-delay="100"
       >
         <Image
-          src="/images/homepage1.svg"
+          src="/images/image2.png"
           alt="Ayurvedic Diet Illustration"
-          width={280}
-          height={280}
+          width={290}
+          height={290}
           priority
         />
       </div>
@@ -44,10 +44,10 @@ export default function Hero() {
         data-aos-delay="300"
       >
         <Image
-          src="/images/homepage1.svg"
+          src="/images/image2.png"
           alt="Ayurvedic Diet Illustration"
-          width={400}
-          height={400}
+          width={410}
+          height={410}
           priority
         />
       </div>
