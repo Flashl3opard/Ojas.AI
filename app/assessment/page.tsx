@@ -2,11 +2,11 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation"; // Import useRouter
+import { useRouter } from "next/navigation";
 import Navbar from "../components/Navbar";
+import { motion } from "framer-motion"; // ✅ Import motion
 
 const quizQuestions = [
-  // ... (quizQuestions array remains the same)
   {
     id: "bodyFrame",
     label: "Body Frame",
@@ -101,7 +101,7 @@ const quizQuestions = [
 
 export default function AssessmentPage() {
   const [answers, setAnswers] = useState<Record<string, string>>({});
-  const router = useRouter(); // Initialize router
+  const router = useRouter();
 
   const handleAnswer = (id: string, value: string) => {
     setAnswers({ ...answers, [id]: value });
@@ -132,23 +132,60 @@ export default function AssessmentPage() {
   return (
     <>
       <Navbar />
-      <div className="min-h-screen bg-neutral-100 flex flex-col items-center py-12 px-4 font-sans">
-        <div className="w-full max-w-6xl bg-white shadow-2xl rounded-3xl p-8 border border-neutral-200">
+      <motion.div
+        className="min-h-screen bg-neutral-100 flex flex-col items-center py-12 px-4 font-sans"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8 }}
+      >
+        <motion.div
+          className="w-full max-w-6xl bg-white shadow-2xl rounded-3xl p-8 border border-neutral-200"
+          initial={{ y: 30, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.8 }}
+        >
           <div className="text-center mb-8">
-            <h1 className="text-4xl font-extrabold text-gray-800">
+            <motion.h1
+              className="text-4xl font-extrabold text-gray-800"
+              initial={{ y: -20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.6 }}
+            >
               Dosha Assessment Quiz
-            </h1>
-            <p className="text-gray-500 mt-2">
+            </motion.h1>
+            <motion.p
+              className="text-gray-500 mt-2"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.4, duration: 0.6 }}
+            >
               Answer the questions below to discover your unique mind-body
               constitution (Prakriti).
-            </p>
+            </motion.p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-6">
+          <motion.div
+            className="grid md:grid-cols-2 gap-6"
+            initial="hidden"
+            animate="visible"
+            variants={{
+              hidden: {},
+              visible: {
+                transition: {
+                  staggerChildren: 0.1,
+                },
+              },
+            }}
+          >
             {quizQuestions.map((q) => (
-              <div
+              <motion.div
                 key={q.id}
                 className="border border-neutral-200 rounded-2xl p-6 bg-white shadow-sm transition-all duration-300 hover:shadow-md"
+                variants={{
+                  hidden: { opacity: 0, y: 30 },
+                  visible: { opacity: 1, y: 0 },
+                }}
+                transition={{ duration: 0.5 }}
               >
                 <h3 className="font-semibold text-lg mb-4 text-gray-800">
                   {q.label}
@@ -171,7 +208,6 @@ export default function AssessmentPage() {
                         onChange={() => handleAnswer(q.id, opt.value)}
                         className="hidden"
                       />
-
                       <div
                         className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-colors duration-300 ${
                           answers[q.id] === opt.value
@@ -189,20 +225,23 @@ export default function AssessmentPage() {
                     </label>
                   ))}
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
 
           <div className="flex justify-center mt-10">
-            <button
+            <motion.button
               onClick={calculateDosha}
-              className="bg-green-600 text-white font-bold text-lg px-10 py-4 rounded-full transition-all duration-300 hover:bg-green-700 transform hover:scale-105 shadow-lg"
+              className="bg-green-600 text-white font-bold text-lg px-10 py-4 rounded-full shadow-lg"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ type: "spring", stiffness: 300 }}
             >
               Calculate Your Dosha
-            </button>
+            </motion.button>
           </div>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </>
   );
 }

@@ -3,7 +3,6 @@
 import { useSearchParams } from "next/navigation";
 import Navbar from "../components/Navbar";
 import { useEffect, useState } from "react";
-
 import { Pie } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -45,6 +44,64 @@ When Kapha is out of balance, there may be lethargy, weight gain, excess mucus, 
   },
 };
 
+function getBmiScale(bmi: number) {
+  if (bmi < 18.5) return "Underweight";
+  if (bmi >= 18.5 && bmi < 25) return "Healthy Weight";
+  if (bmi >= 25 && bmi < 30) return "Overweight";
+  return "Obese";
+}
+
+// Accordion Component
+function Accordion({
+  title,
+  content,
+  defaultOpen = false,
+}: {
+  title: string;
+  content: React.ReactNode;
+  defaultOpen?: boolean;
+}) {
+  const [open, setOpen] = useState(defaultOpen);
+  return (
+    <div className="mb-5">
+      <button
+        className="w-full flex justify-between items-center px-6 py-5 bg-[#FBF6EF] border border-[#223A34] rounded-xl shadow transition-colors group"
+        onClick={() => setOpen((v) => !v)}
+      >
+        <span className="text-xl font-semibold text-[#223A34] font-serif">
+          {title}
+        </span>
+        <svg
+          className={`w-6 h-6 transform transition-transform ${
+            open ? "rotate-180" : ""
+          } text-[#223A34]`}
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M19 9l-7 7-7-7"
+          />
+        </svg>
+      </button>
+      <div
+        className={`overflow-hidden transition-all duration-300 bg-white rounded-b-xl border-x border-b border-[#223A34] ${
+          open ? "max-h-[600px] p-6" : "max-h-0 p-0"
+        }`}
+      >
+        {open && (
+          <div className="text-gray-700 text-lg whitespace-pre-line font-sans">
+            {content}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 export default function AssessmentResultPage() {
   const searchParams = useSearchParams();
 
@@ -60,13 +117,6 @@ export default function AssessmentResultPage() {
     const bmiValue = weight / Math.pow(height / 100, 2);
     setBmi(parseFloat(bmiValue.toFixed(2)));
   }, [weight, height]);
-
-  const getBmiScale = (bmi: number) => {
-    if (bmi < 18.5) return "Underweight";
-    if (bmi >= 18.5 && bmi < 25) return "Healthy Weight";
-    if (bmi >= 25 && bmi < 30) return "Overweight";
-    return "Obese";
-  };
 
   const doshaResult = [
     { name: "Vata", value: vata },
@@ -111,7 +161,6 @@ export default function AssessmentResultPage() {
       </span>
     );
 
-  // Pie chart data setup
   const chartData = {
     labels: ["Vata", "Pitta", "Kapha"],
     datasets: [
@@ -149,75 +198,60 @@ export default function AssessmentResultPage() {
   return (
     <>
       <Navbar />
-      <div className="min-h-screen bg-neutral-100 flex flex-col items-center py-16 px-4 font-sans">
-        <h3 className="text-sm tracking-wide text-green-700 uppercase mb-6 text-center">
+      <div className="min-h-screen bg-[#FBF6EF] flex flex-col items-center py-16 px-4 font-serif">
+        <h3 className="text-sm tracking-wide text-[#223A34] uppercase mb-6 text-center font-semibold">
           Dosha Quiz Result
         </h3>
-        <h1 className="text-4xl font-light text-gray-900 mb-8 text-center">
+        <h1 className="text-4xl font-light text-[#223A34] mb-8 text-center">
           Your dominant Dosha is
         </h1>
         <div className="flex flex-col items-center justify-center mb-12">
           <div>{doshaSymbol}</div>
-          <div className="text-2xl mt-4 font-medium tracking-wide text-gray-700">
+          <div className="text-2xl mt-4 font-medium tracking-wide text-[#223A34] font-serif">
             {primaryDosha}
           </div>
-          <button className="mt-7 px-6 py-2 border rounded text-green-900 border-green-900 font-semibold bg-white hover:bg-green-50 transition-colors text-base shadow focus:outline-none">
+          <button className="mt-7 px-6 py-2 border rounded text-[#223A34] border-[#223A34] font-semibold bg-[#FBF6EF] hover:bg-white transition-colors text-base shadow focus:outline-none">
             SAVE RESULT AS PDF
           </button>
         </div>
         <div className="w-full max-w-2xl flex flex-col gap-10">
           {/* Pie Chart */}
           <div className="bg-white rounded-2xl shadow-lg p-8">
-            <h2 className="text-center text-2xl font-semibold text-gray-700 mb-6">
+            <h2 className="text-center text-2xl font-semibold text-[#223A34] mb-6 font-serif">
               Dosha Distribution
             </h2>
             <Pie data={chartData} options={chartOptions} />
           </div>
-
           {/* Health scale box */}
-          <div className="bg-green-50 rounded-2xl shadow-lg p-8 flex flex-col gap-5 items-center">
-            <div className="text-lg font-medium text-gray-700">
-              BMI: <span className="font-bold text-green-700">{bmi}</span>
+          <div className="bg-[#C5DECB] rounded-2xl shadow-lg p-8 flex flex-col gap-5 items-center">
+            <div className="text-lg font-medium text-[#223A34]">
+              BMI: <span className="font-bold text-[#285C4D]">{bmi}</span>
             </div>
-            <div className="text-lg font-medium text-gray-700">
+            <div className="text-lg font-medium text-[#223A34]">
               Health Scale:{" "}
-              <span className="font-bold text-green-700">
+              <span className="font-bold text-[#285C4D]">
                 {getBmiScale(bmi)}
               </span>
             </div>
           </div>
-
-          {/* Dosha text descriptions */}
+          {/* Dosha Accordions */}
           <div className="bg-white rounded-2xl shadow-lg p-10 mt-7">
-            <h2 className="text-3xl font-semibold text-gray-800 mb-8 text-center">
+            <h2 className="text-3xl font-semibold text-[#223A34] mb-8 text-center font-serif">
               What does it mean for you?
             </h2>
-            <div className="mb-8">
-              <h3 className="text-2xl font-bold text-gray-700 mb-3">
-                {`You are predominantly ${primaryDosha}`}
-              </h3>
-              <p className="text-gray-700 text-lg whitespace-pre-line">
-                {doshaDetails[primaryDosha].text}
-              </p>
-            </div>
-            <div>
-              <h3 className="text-2xl font-bold text-gray-700 mb-3">
-                {`Your secondary dosha is ${secondaryDosha}`}
-              </h3>
-              <p className="text-gray-700 text-lg whitespace-pre-line">
-                {doshaDetails[secondaryDosha].text}
-              </p>
-            </div>
+            <Accordion
+              title={`You are predominantly ${primaryDosha}`}
+              content={doshaDetails[primaryDosha].text}
+              defaultOpen={true}
+            />
+            <Accordion
+              title={`Your secondary dosha is ${secondaryDosha}`}
+              content={doshaDetails[secondaryDosha].text}
+              defaultOpen={false}
+            />
           </div>
         </div>
       </div>
     </>
   );
-}
-
-function getBmiScale(bmi: number) {
-  if (bmi < 18.5) return "Underweight";
-  if (bmi >= 18.5 && bmi < 25) return "Healthy Weight";
-  if (bmi >= 25 && bmi < 30) return "Overweight";
-  return "Obese";
 }
