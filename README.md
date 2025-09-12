@@ -25,3 +25,4 @@ The proposed solution should provide an intuitive platform tailored for Ayurvedi
 - Integration Potential: Capability to integrate with hospital information systems (HIS) or electronic health records (EHR).
 - Mobile Support: Compatibility with mobile and tablet devices for on-the-go usage by doctors and patients.
 - Reporting Tools: Ability to generate printable diet charts and reports for patient handouts.
+Author - ANSH BIRE
