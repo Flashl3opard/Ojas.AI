@@ -5,6 +5,8 @@ export default function Navbar() {
   const linkClasses = "hover:text-green-600 transition";
   const loginButtonClasses =
     "bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition";
+  const signupButtonClasses =
+    "ml-3 border border-green-600 text-green-600 px-4 py-2 rounded-lg hover:bg-green-50 transition";
 
   return (
     <nav className="flex items-center justify-between py-4 px-6 md:px-16 shadow-sm bg-white">
@@ -44,9 +46,14 @@ export default function Navbar() {
         </li>
       </ul>
 
-      <Link href="/login" className={loginButtonClasses}>
-        Login
-      </Link>
+      <div className="flex items-center">
+        <Link href="/login" className={loginButtonClasses}>
+          Login
+        </Link>
+        <Link href="/signup" className={signupButtonClasses}>
+          Signup
+        </Link>
+      </div>
     </nav>
   );
 }
