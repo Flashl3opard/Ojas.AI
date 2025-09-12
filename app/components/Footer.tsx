@@ -46,8 +46,8 @@ export default function Footer() {
         {/* Contact */}
         <div>
           <h2 className="text-lg font-bold text-green-700 mb-3">Contact</h2>
-          <p className="text-sm">📧 support@ayurvedaapp.com</p>
-          <p className="text-sm">📍 Pune, India</p>
+          <p className="text-sm">📧 23BME073@IIITDMJ.AC.IN</p>
+          <p className="text-sm">📍 Jabalpur, India</p>
           <div className="flex space-x-4 mt-3">
             <a href="#" className="hover:text-green-600 transition">
               🌿
