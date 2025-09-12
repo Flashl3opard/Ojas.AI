@@ -35,11 +35,6 @@ export default function Navbar() {
           </Link>
         </li>
         <li>
-          <Link href="/about" className={linkClasses}>
-            About Us
-          </Link>
-        </li>
-        <li>
           <Link href="/contact" className={linkClasses}>
             Contact
           </Link>
