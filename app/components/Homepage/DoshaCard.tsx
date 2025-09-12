@@ -60,7 +60,7 @@ export default function DoshaCard({
           </div>
 
           <Link
-            href="/questionnaire"
+            href="/Dosha"
             className="mt-4 inline-block bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-green-700 transition"
           >
             Find out your type →
