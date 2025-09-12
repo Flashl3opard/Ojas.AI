@@ -4,6 +4,7 @@ import HowItWorks from "./components/Homepage/HowItWorks";
 import DoshaEducation from "./components/Homepage/DoshaEducation";
 import Features from "./components/Homepage/Features";
 import Conditions from "./components/Homepage/Conditions";
+import Footer from "./components/Footer";
 
 export default function Home() {
   return (
@@ -15,6 +16,7 @@ export default function Home() {
         <DoshaEducation />
         <HowItWorks />
         <Conditions />
+        <Footer />
       </main>
     </>
   );
