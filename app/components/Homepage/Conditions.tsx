@@ -64,8 +64,8 @@ const conditions = [
 
 export default function Conditions() {
   return (
-    <section className="px-6 md:px-20 py-16 bg-white">
-      <h2 className="text-3xl md:text-4xl font-bold text-gray-900 text-center mb-12">
+    <section className="px-6 pt-36  md:px-20 py-16 bg-white">
+      <h2 className="text-3xl md:text-4xl font-bold text-gray-900 text-center mb-12 pb-10">
         Conditions We Treat With Ayurvedic Healing Solutions
       </h2>
 

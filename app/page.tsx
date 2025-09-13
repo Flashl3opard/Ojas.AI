@@ -14,8 +14,8 @@ export default function Home() {
         <Hero />
         <Features />
         <DoshaEducation />
-        <HowItWorks />
         <Conditions />
+        <HowItWorks />
         <Footer />
       </main>
     </>

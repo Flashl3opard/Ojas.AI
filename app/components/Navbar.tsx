@@ -6,14 +6,14 @@ export default function Navbar() {
   const loginButtonClasses =
     "bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition";
   const signupButtonClasses =
-    "ml-3 border border-green-600 text-green-600 px-4 py-2 rounded-lg hover:bg-green-50 transition";
+    "ml-3 border border-green-600 text-green-600 px-4 py-2 rounded-lg hover:bg-green-100 transition bg-white";
 
   return (
-    <nav className="flex items-center justify-between py-4 px-6 md:px-16 shadow-sm bg-white">
+    <nav className="flex items-center justify-between py-4 px-6 md:px-16 shadow-sm bg-[#1A3129]">
       <Logo />
 
       {/* Navigation links, hidden on small screens */}
-      <ul className="hidden md:flex space-x-8 text-gray-700 font-medium">
+      <ul className="hidden md:flex space-x-8 text-white">
         <li>
           <Link href="/" className={linkClasses}>
             Home

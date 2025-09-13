@@ -2,7 +2,7 @@
 
 export default function Footer() {
   return (
-    <footer className="bg-green-200 text-gray-700 mt-10">
+    <footer className="bg-[#1A3129] text-white mt-10">
       <div className="max-w-7xl mx-auto px-6 py-10 grid grid-cols-1 md:grid-cols-3 gap-8">
         {/* About */}
         <div>
@@ -62,7 +62,7 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="bg-green-200 text-center py-3 text-sm">
+      <div className="bg-[#1A3129] text-center py-3 text-sm">
         © {new Date().getFullYear()} Ayurvedic Wellness. All rights reserved.
       </div>
     </footer>

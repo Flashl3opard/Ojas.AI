@@ -20,7 +20,7 @@ const steps = [
 
 export default function HowItWorks() {
   return (
-    <section className="py-16 px-6 md:px-20 bg-gray-50 text-center">
+    <section className="py-16 px-6 pb-28 md:px-20 bg-white text-center">
       <h2 className="text-3xl font-bold text-gray-900 mb-12" data-aos="fade-up">
         How it works
       </h2>
@@ -28,7 +28,7 @@ export default function HowItWorks() {
         {steps.map((step, idx) => (
           <div
             key={idx}
-            className="flex flex-col items-center space-y-4 bg-green-200 rounded-2xl shadow-sm p-6 border border-green-100 hover:shadow-md transition"
+            className="flex flex-col items-center space-y-4 bg-[#EEF8D3] rounded-2xl shadow-sm p-6 hover:shadow-md transition"
             data-aos="fade-up"
             data-aos-delay={idx * 200}
           >
