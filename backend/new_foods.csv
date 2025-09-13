@@ -1,0 +1,318 @@
+Meal Type,Food Name,Calories,Protein (g),Fats (g),Carbs (g),Vata,Pitta,Kapha
+Breakfast,Moong Dal Chilla,180,10,8,15,-,=,+
+Breakfast,Ragi Dosa,220,6,4,40,-,-,+
+Breakfast,Vegetable Upma,280,8,10,40,-,=,+
+Breakfast,Poha,250,6,8,42,-,=,+
+Breakfast,Idli with Sambar,200,8,2,38,-,-,+
+Breakfast,Rava Idli,180,5,4,30,-,=,+
+Breakfast,Besan Chilla,190,9,8,18,-,=,+
+Breakfast,Vegetable Sandwich,300,10,12,40,-,-,+
+Breakfast,Aloo Paratha,330,8,12,45,+,+,+
+Breakfast,Methi Paratha,280,9,10,35,-,=,+
+Breakfast,Missal Pav,350,15,12,45,+,+,+
+Breakfast,Appam with Vegetable Stew,320,8,12,45,-,-,=
+Breakfast,Adai with Avial,380,15,12,45,-,=,+
+Breakfast,Pesarattu with Ginger Chutney,290,11,10,35,-,-,+
+Breakfast,Ragi Malt,220,7,4,40,-,-,+
+Breakfast,Vegetable Vermicelli,280,8,10,40,-,=,+
+Breakfast,Tomato Uttapam,250,8,6,35,-,-,+
+Breakfast,Onion Dosa,220,6,5,35,-,=,+
+Breakfast,Vegetable Idli,210,8,3,35,-,-,+
+Breakfast,Masala Dosa,280,6,10,38,+,+,+
+Breakfast,Set Dosa with Potato Palya,300,7,10,45,+,=,+
+Breakfast,Rice Idli with Coconut Chutney,220,6,6,35,-,-,+
+Breakfast,Vegetable Semiya,270,7,9,38,-,=,+
+Breakfast,Vegetable Oats,250,9,7,35,-,-,+
+Breakfast,Vegetable Quinoa,280,10,8,35,-,-,+
+Breakfast,Vegetable Rava Upma,260,7,8,38,-,=,+
+Breakfast,Vegetable Pongal,300,8,10,45,-,-,+
+Breakfast,Vegetable Besan Puda,200,9,8,20,-,=,+
+Breakfast,Vegetable Ragi Roti,220,7,6,35,-,-,+
+Breakfast,Vegetable Jowar Roti with Sabzi,350,10,12,45,-,-,+
+Breakfast,Vegetable Makki Roti with Sarson Saag,380,12,15,45,-,-,+
+Lunch,Vegetable Khichdi,350,10,7,60,-,-,+
+Lunch,Palak Paneer,420,18,28,22,=,-,+
+Lunch,Chana Masala,380,15,12,55,-,+,+
+Lunch,Dal Tadka,280,10,8,40,-,+,+
+Lunch,Aloo Gobi,250,6,10,35,-,=,+
+Lunch,Baingan Bharta,180,4,9,22,-,=,+
+Lunch,Vegetable Biryani,450,9,16,68,+,+,+
+Lunch,Sambar with Rice,320,12,8,50,-,-,+
+Lunch,Rasam Rice,220,6,4,40,-,-,=
+Lunch,Vegetable Pulao,380,8,12,60,-,-,+
+Lunch,Rajma,350,14,10,50,-,+,+
+Lunch,Lauki Sabzi,100,2,4,15,-,-,+
+Lunch,Tinda Sabzi,90,2,4,14,-,-,+
+Lunch,Bhindi Masala,120,4,6,15,-,-,+
+Lunch,Methi Malai Matar,280,9,15,25,=,-,+
+Lunch,Yellow Moong Dal,180,10,5,25,-,-,=
+Lunch,Masoor Dal,190,11,6,26,-,+,+
+Lunch,Urad Dal,350,25,15,35,+,+,+
+Lunch,Chole,380,15,12,55,+,+,+
+Lunch,Vegetable Korma,400,10,25,35,+,+,+
+Lunch,Vegetable Kadhai,320,8,15,35,+,=,+
+Lunch,Vegetable Jalfrezi,350,9,18,35,+,+,+
+Lunch,Vegetable Kofta,420,12,28,35,+,+,+
+Lunch,Vegetable Makhanwala,450,12,30,40,+,+,+
+Lunch,Vegetable Handi,380,10,22,35,+,=,+
+Lunch,Vegetable Navratan,400,11,20,45,+,+,+
+Lunch,Vegetable Chettinad,380,12,18,35,+,+,+
+Lunch,Vegetable Kolhapuri,370,10,16,38,+,+,+
+Lunch,Vegetable Awadhi,420,12,25,40,+,+,+
+Lunch,Vegetable Hyderabadi,400,11,20,42,+,+,+
+Lunch,Vegetable Mughlai,450,13,28,40,+,+,+
+Lunch,Vegetable Malabar,380,10,20,38,+,+,+
+Lunch,Vegetable Coorgi,360,9,18,40,+,+,+
+Lunch,Vegetable Guntur,370,10,16,42,+,+,+
+Lunch,Vegetable Chettinad,380,12,18,35,+,+,+
+Lunch,Vegetable Konkani,350,8,15,40,+,+,+
+Lunch,Vegetable Mangalorean,370,9,16,42,+,+,+
+Lunch,Vegetable Goan,360,10,15,40,+,+,+
+Lunch,Vegetable Kerala,350,8,14,42,+,+,+
+Lunch,Vegetable Tamil Nadu,360,9,15,43,+,+,+
+Lunch,Vegetable Andhra,380,10,16,45,+,+,+
+Lunch,Vegetable Karnataka,370,9,15,44,+,+,+
+Lunch,Vegetable Maharashtra,360,8,14,43,+,+,+
+Lunch,Vegetable Gujarati,350,7,12,45,-,-,+
+Lunch,Vegetable Punjabi,420,12,22,45,+,+,+
+Lunch,Vegetable Rajasthani,380,10,18,40,+,+,+
+Lunch,Vegetable Bengali,370,11,16,42,+,+,+
+Lunch,Vegetable Bihari,360,9,14,43,+,+,+
+Lunch,Vegetable Uttar Pradesh,380,10,16,45,+,+,+
+Lunch,Vegetable Madhya Pradesh,370,9,15,44,+,+,+
+Lunch,Vegetable Himachali,360,8,14,43,+,+,+
+Lunch,Vegetable Kashmiri,380,10,16,45,+,+,+
+Lunch,Vegetable Assamese,370,9,15,44,+,+,+
+Lunch,Vegetable Odia,360,8,14,43,+,+,+
+Lunch,Vegetable Manipuri,350,7,12,45,+,+,+
+Lunch,Vegetable Nagaland,380,10,16,45,+,+,+
+Lunch,Vegetable Sikkimese,370,9,15,44,+,+,+
+Lunch,Vegetable Tripuri,360,8,14,43,+,+,+
+Lunch,Vegetable Arunachali,350,7,12,45,+,+,+
+Lunch,Vegetable Mizo,380,10,16,45,+,+,+
+Lunch,Vegetable Meghalayan,370,9,15,44,+,+,+
+Lunch,Vegetable Garhwali,360,8,14,43,+,+,+
+Lunch,Vegetable Kumaoni,350,7,12,45,+,+,+
+Dinner,Vegetable Khichdi,350,10,7,60,-,-,+
+Dinner,Palak Paneer,420,18,28,22,=,-,+
+Dinner,Chana Masala,380,15,12,55,-,+,+
+Dinner,Dal Tadka,280,10,8,40,-,+,+
+Dinner,Aloo Gobi,250,6,10,35,-,=,+
+Dinner,Baingan Bharta,180,4,9,22,-,=,+
+Dinner,Vegetable Biryani,450,9,16,68,+,+,+
+Dinner,Sambar with Rice,320,12,8,50,-,-,+
+Dinner,Rasam Rice,220,6,4,40,-,-,=
+Dinner,Vegetable Pulao,380,8,12,60,-,-,+
+Dinner,Rajma,350,14,10,50,-,+,+
+Dinner,Lauki Sabzi,100,2,4,15,-,-,+
+Dinner,Tinda Sabzi,90,2,4,14,-,-,+
+Dinner,Bhindi Masala,120,4,6,15,-,-,+
+Dinner,Methi Malai Matar,280,9,15,25,=,-,+
+Dinner,Yellow Moong Dal,180,10,5,25,-,-,=
+Dinner,Masoor Dal,190,11,6,26,-,+,+
+Dinner,Urad Dal,350,25,15,35,+,+,+
+Dinner,Chole,380,15,12,55,+,+,+
+Dinner,Vegetable Korma,400,10,25,35,+,+,+
+Dinner,Vegetable Kadhai,320,8,15,35,+,=,+
+Dinner,Vegetable Jalfrezi,350,9,18,35,+,+,+
+Dinner,Vegetable Kofta,420,12,28,35,+,+,+
+Dinner,Vegetable Makhanwala,450,12,30,40,+,+,+
+Dinner,Vegetable Handi,380,10,22,35,+,=,+
+Dinner,Vegetable Navratan,400,11,20,45,+,+,+
+Dinner,Vegetable Chettinad,380,12,18,35,+,+,+
+Dinner,Vegetable Kolhapuri,370,10,16,38,+,+,+
+Dinner,Vegetable Awadhi,420,12,25,40,+,+,+
+Dinner,Vegetable Hyderabadi,400,11,20,42,+,+,+
+Dinner,Vegetable Mughlai,450,13,28,40,+,+,+
+Dinner,Vegetable Malabar,380,10,20,38,+,+,+
+Dinner,Vegetable Coorgi,360,9,18,40,+,+,+
+Dinner,Vegetable Guntur,370,10,16,42,+,+,+
+Dinner,Vegetable Chettinad,380,12,18,35,+,+,+
+Dinner,Vegetable Konkani,350,8,15,40,+,+,+
+Dinner,Vegetable Mangalorean,370,9,16,42,+,+,+
+Dinner,Vegetable Goan,360,10,15,40,+,+,+
+Dinner,Vegetable Kerala,350,8,14,42,+,+,+
+Dinner,Vegetable Tamil Nadu,360,9,15,43,+,+,+
+Dinner,Vegetable Andhra,380,10,16,45,+,+,+
+Dinner,Vegetable Karnataka,370,9,15,44,+,+,+
+Dinner,Vegetable Maharashtra,360,8,14,43,+,+,+
+Dinner,Vegetable Gujarati,350,7,12,45,-,-,+
+Dinner,Vegetable Punjabi,420,12,22,45,+,+,+
+Dinner,Vegetable Rajasthani,380,10,18,40,+,+,+
+Dinner,Vegetable Bengali,370,11,16,42,+,+,+
+Dinner,Vegetable Bihari,360,9,14,43,+,+,+
+Dinner,Vegetable Uttar Pradesh,380,10,16,45,+,+,+
+Dinner,Vegetable Madhya Pradesh,370,9,15,44,+,+,+
+Dinner,Vegetable Himachali,360,8,14,43,+,+,+
+Dinner,Vegetable Kashmiri,380,10,16,45,+,+,+
+Dinner,Vegetable Assamese,370,9,15,44,+,+,+
+Dinner,Vegetable Odia,360,8,14,43,+,+,+
+Dinner,Vegetable Manipuri,350,7,12,45,+,+,+
+Dinner,Vegetable Nagaland,380,10,16,45,+,+,+
+Dinner,Vegetable Sikkimese,370,9,15,44,+,+,+
+Dinner,Vegetable Tripuri,360,8,14,43,+,+,+
+Dinner,Vegetable Arunachali,350,7,12,45,+,+,+
+Dinner,Vegetable Mizo,380,10,16,45,+,+,+
+Dinner,Vegetable Meghalayan,370,9,15,44,+,+,+
+Dinner,Vegetable Garhwali,360,8,14,43,+,+,+
+Dinner,Vegetable Kumaoni,350,7,12,45,+,+,+
+Breakfast,Vegetable Rava Dosa,240,6,8,35,-,=,+
+Breakfast,Vegetable Adai,280,10,8,35,-,=,+
+Breakfast,Vegetable Pesarattu,260,9,8,30,-,-,+
+Breakfast,Vegetable Uttapam,270,8,6,35,-,-,+
+Breakfast,Vegetable Appam,250,6,5,40,-,-,=
+Breakfast,Vegetable Poha with Peanuts,280,8,10,40,-,=,+
+Breakfast,Vegetable Upma with Vegetables,300,8,10,45,-,=,+
+Breakfast,Vegetable Semiya Upma,270,7,8,40,-,=,+
+Breakfast,Vegetable Quinoa Upma,290,10,8,35,-,-,+
+Breakfast,Vegetable Oats Upma,260,9,7,35,-,-,+
+Breakfast,Vegetable Ragi Upma,280,8,8,40,-,-,+
+Breakfast,Vegetable Jowar Upma,290,8,8,42,-,-,+
+Breakfast,Vegetable Bajra Upma,280,7,8,40,-,-,+
+Breakfast,Vegetable Pongal with Vegetables,320,9,10,45,-,-,+
+Breakfast,Vegetable Khichdi for Breakfast,330,10,8,45,-,-,+
+Breakfast,Vegetable Besan Chilla with Stuffing,220,10,9,20,-,=,+
+Breakfast,Vegetable Moong Dal Chilla,200,11,8,18,-,=,+
+Breakfast,Vegetable Masala Dosa with Potato,300,7,10,40,+,+,+
+Breakfast,Vegetable Set Dosa,240,6,6,35,-,=,+
+Breakfast,Vegetable Ragi Dosa with Chutney,250,7,5,40,-,-,+
+Breakfast,Vegetable Adai with Chutney,290,11,8,35,-,=,+
+Breakfast,Vegetable Pesarattu with Chutney,270,10,8,30,-,-,+
+Breakfast,Vegetable Uttapam with Chutney,280,8,6,35,-,-,+
+Breakfast,Vegetable Appam with Stew,320,8,12,45,-,-,=
+Breakfast,Vegetable Idli with Sambar,220,8,3,35,-,-,+
+Breakfast,Vegetable Rava Idli with Chutney,200,6,4,30,-,=,+
+Breakfast,Vegetable Oats Idli,210,7,4,30,-,-,+
+Breakfast,Vegetable Ragi Idli,220,7,4,35,-,-,+
+Breakfast,Vegetable Quinoa Idli,230,8,4,35,-,-,+
+Breakfast,Vegetable Millet Idli,220,7,4,35,-,-,+
+Breakfast,Vegetable Brown Rice Idli,230,7,4,36,-,-,+
+Breakfast,Vegetable Multi-grain Idli,240,8,4,37,-,-,+
+Breakfast,Vegetable Stuffed Idli,260,9,6,35,-,-,+
+Breakfast,Vegetable Masala Idli,250,8,5,35,-,-,+
+Breakfast,Vegetable Kanchipuram Idli,270,8,6,38,-,=,+
+Breakfast,Vegetable Mallige Idli,220,7,3,35,-,-,+
+Breakfast,Vegetate Thatte Idli,240,7,4,37,-,-,+
+Breakfast,Vegetable Moode Idli,250,8,5,36,-,-,+
+Breakfast,Vegetable Kotte Idli,260,8,6,37,-,-,+
+Breakfast,Vegetacle Kunda Idli,270,9,6,38,-,-,+
+Lunch,Vegetable Sambar with Rice,340,12,8,52,-,-,+
+Lunch,Vegetable Rasam with Rice,240,7,4,42,-,-,=
+Lunch,Vegetable Pulao with Raita,420,12,15,55,-,-,+
+Lunch,Vegetable Biryani with Raita,480,14,18,60,+,+,+
+Lunch,Vegetable Khichdi with Papad,380,12,10,55,-,-,+
+Lunch,Vegetable Lemon Rice with Potato,350,8,10,50,-,-,+
+Lunch,Vegetable Tamarind Rice with Papad,370,8,12,52,-,+,+
+Lunch,Vegetable Coconut Rice with Curry,400,9,15,50,+,+,+
+Lunch,Vegetable Curd Rice with Pickle,380,10,12,50,-,-,+
+Lunch,Vegetable Tomato Rice with Raita,360,8,10,50,-,-,+
+Lunch,Vegetable Mint Rice with Raita,370,9,10,52,-,-,+
+Lunch,Vegetable Coriander Rice with Raita,380,9,10,53,-,-,+
+Lunch,Vegetable Curry Leaf Rice with Raita,370,8,10,52,-,-,+
+Lunch,Vegetable Mustard Rice with Raita,380,9,11,52,-,-,+
+Lunch,Vegetable Pepper Rice with Raita,370,8,10,52,-,-,+
+Lunch,Vegetable Garlic Rice with Raita,380,9,11,52,-,-,+
+Lunch,Vegetable Ginger Rice with Raita,370,8,10,52,-,-,+
+Lunch,Vegetable Onion Rice with Raita,380,9,11,52,-,-,+
+Lunch,Vegetable Mixed Vegetable Rice,400,10,12,55,-,-,+
+Lunch,Vegetable Spinach Rice with Raita,390,10,11,53,-,-,+
+Lunch,Vegetable Carrot Rice with Raita,380,9,10,53,-,-,+
+Lunch,Vegetable Beetroot Rice with Raita,390,9,10,54,-,-,+
+Lunch,Vegetable Beans Rice with Raita,380,9,10,53,-,-,+
+Lunch,Vegetable Peas Rice with Raita,390,10,10,54,-,-,+
+Lunch,Vegetable Corn Rice with Raita,400,10,10,55,-,-,+
+Lunch,Vegetable Capsicum Rice with Raita,390,9,10,54,-,-,+
+Lunch,Vegetable Cabbage Rice with Raita,380,8,10,53,-,-,+
+Lunch,Vegetable Cauliflower Rice with Raita,390,9,10,54,-,-,+
+Lunch,Vegetable Broccoli Rice with Raita,400,10,10,55,-,-,+
+Lunch,Vegetable Zucchini Rice with Raita,390,9,10,54,-,-,+
+Lunch,Vegetable Bell Pepper Rice with Raita,400,9,10,55,-,-,+
+Lunch,Vegetable Mushroom Rice with Raita,410,12,10,52,-,-,+
+Lunch,Vegetable Tofu Rice with Raita,420,15,12,50,-,-,+
+Lunch,Vegetable Paneer Rice with Raita,450,18,15,50,=,-,+
+Lunch,Vegetable Soybean Rice with Raita,430,20,12,48,-,-,+
+Lunch,Vegetable Chickpea Rice with Raita,440,18,12,52,-,+,+
+Lunch,Vegetable Lentil Rice with Raita,420,16,10,52,-,-,+
+Lunch,Vegetable Kidney Beans Rice with Raita,450,18,12,54,-,+,+
+Lunch,Vegetable Black Gram Rice with Raita,460,20,13,53,+,+,+
+Lunch,Vegetable Green Gram Rice with Raita,420,16,10,52,-,-,+
+Lunch,Vegetable Bengal Gram Rice with Raita,430,17,11,52,-,+,+
+Lunch,Vegetable Horse Gram Rice with Raita,440,18,12,52,-,-,+
+Lunch,Vegetable Moth Beans Rice with Raita,430,17,11,52,-,-,+
+Lunch,Vegetable Cowpea Rice with Raita,420,16,10,52,-,-,+
+Lunch,Vegetable Field Beans Rice with Raita,430,17,11,52,-,-,+
+Lunch,Vegetable Lablab Beans Rice with Raita,440,18,12,52,-,-,+
+Lunch,Vegetable Cluster Beans Rice with Raita,420,16,10,52,-,-,+
+Lunch,Vegetable Winged Beans Rice with Raita,430,17,11,52,-,-,+
+Lunch,Vegetable Sword Beans Rice with Raita,440,18,12,52,-,-,+
+Lunch,Vegetable French Beans Rice with Raita,420,16,10,52,-,-,+
+Lunch,Vegetable Runner Beans Rice with Raita,430,17,11,52,-,-,+
+Lunch,Vegetable Lima Beans Rice with Raita,440,18,12,52,-,-,+
+Lunch,Vegetable Fava Beans Rice with Raita,450,19,13,52,-,-,+
+Lunch,Vegetable Adzuki Beans Rice with Raita,440,18,12,52,-,-,+
+Lunch,Vegetable Mung Beans Rice with Raita,420,16,10,52,-,-,+
+Lunch,Vegetable Urad Beans Rice with Raita,460,20,13,53,+,+,+
+Lunch,Vegetable Masoor Beans Rice with Raita,430,17,11,52,-,+,+
+Lunch,Vegetable Toor Beans Rice with Raita,440,18,12,52,-,-,+
+Lunch,Vegetable Chana Beans Rice with Raita,450,19,13,52,-,+,+
+Lunch,Vegetable Rajma Beans Rice with Raita,460,20,14,53,-,+,+
+Dinner,Vegetable Sambar with Rice,340,12,8,52,-,-,+
+Dinner,Vegetable Rasam with Rice,240,7,4,42,-,-,=
+Dinner,Vegetable Pulao with Raita,420,12,15,55,-,-,+
+Dinner,Vegetable Biryani with Raita,480,14,18,60,+,+,+
+Dinner,Vegetable Khichdi with Papad,380,12,10,55,-,-,+
+Dinner,Vegetable Lemon Rice with Potato,350,8,10,50,-,-,+
+Dinner,Vegetable Tamarind Rice with Papad,370,8,12,52,-,+,+
+Dinner,Vegetable Coconut Rice with Curry,400,9,15,50,+,+,+
+Dinner,Vegetable Curd Rice with Pickle,380,10,12,50,-,-,+
+Dinner,Vegetable Tomato Rice with Raita,360,8,10,50,-,-,+
+Dinner,Vegetable Mint Rice with Raita,370,9,10,52,-,-,+
+Dinner,Vegetable Coriander Rice with Raita,380,9,10,53,-,-,+
+Dinner,Vegetable Curry Leaf Rice with Raita,370,8,10,52,-,-,+
+Dinner,Vegetable Mustard Rice with Raita,380,9,11,52,-,-,+
+Dinner,Vegetable Pepper Rice with Raita,370,8,10,52,-,-,+
+Dinner,Vegetable Garlic Rice with Raita,380,9,11,52,-,-,+
+Dinner,Vegetable Ginger Rice with Raita,370,8,10,52,-,-,+
+Dinner,Vegetable Onion Rice with Raita,380,9,11,52,-,-,+
+Dinner,Vegetable Mixed Vegetable Rice,400,10,12,55,-,-,+
+Dinner,Vegetable Spinach Rice with Raita,390,10,11,53,-,-,+
+Dinner,Vegetable Carrot Rice with Raita,380,9,10,53,-,-,+
+Dinner,Vegetable Beetroot Rice with Raita,390,9,10,54,-,-,+
+Dinner,Vegetable Beans Rice with Raita,380,9,10,53,-,-,+
+Dinner,Vegetable Peas Rice with Raita,390,10,10,54,-,-,+
+Dinner,Vegetable Corn Rice with Raita,400,10,10,55,-,-,+
+Dinner,Vegetable Capsicum Rice with Raita,390,9,10,54,-,-,+
+Dinner,Vegetable Cabbage Rice with Raita,380,8,10,53,-,-,+
+Dinner,Vegetable Cauliflower Rice with Raita,390,9,10,54,-,-,+
+Dinner,Vegetable Broccoli Rice with Raita,400,10,10,55,-,-,+
+Dinner,Vegetable Zucchini Rice with Raita,390,9,10,54,-,-,+
+Dinner,Vegetable Bell Pepper Rice with Raita,400,9,10,55,-,-,+
+Dinner,Vegetable Mushroom Rice with Raita,410,12,10,52,-,-,+
+Dinner,Vegetable Tofu Rice with Raita,420,15,12,50,-,-,+
+Dinner,Vegetable Paneer Rice with Raita,450,18,15,50,=,-,+
+Dinner,Vegetable Soybean Rice with Raita,430,20,12,48,-,-,+
+Dinner,Vegetable Chickpea Rice with Raita,440,18,12,52,-,+,+
+Dinner,Vegetable Lentil Rice with Raita,420,16,10,52,-,-,+
+Dinner,Vegetable Kidney Beans Rice with Raita,450,18,12,54,-,+,+
+Dinner,Vegetable Black Gram Rice with Raita,460,20,13,53,+,+,+
+Dinner,Vegetable Green Gram Rice with Raita,420,16,10,52,-,-,+
+Dinner,Vegetable Bengal Gram Rice with Raita,430,17,11,52,-,+,+
+Dinner,Vegetable Horse Gram Rice with Raita,440,18,12,52,-,-,+
+Dinner,Vegetable Moth Beans Rice with Raita,430,17,11,52,-,-,+
+Dinner,Vegetable Cowpea Rice with Raita,420,16,10,52,-,-,+
+Dinner,Vegetable Field Beans Rice with Raita,430,17,11,52,-,-,+
+Dinner,Vegetable Lablab Beans Rice with Raita,440,18,12,52,-,-,+
+Dinner,Vegetable Cluster Beans Rice with Raita,420,16,10,52,-,-,+
+Dinner,Vegetable Winged Beans Rice with Raita,430,17,11,52,-,-,+
+Dinner,Vegetable Sword Beans Rice with Raita,440,18,12,52,-,-,+
+Dinner,Vegetable French Beans Rice with Raita,420,16,10,52,-,-,+
+Dinner,Vegetable Runner Beans Rice with Raita,430,17,11,52,-,-,+
+Dinner,Vegetable Lima Beans Rice with Raita,440,18,12,52,-,-,+
+Dinner,Vegetable Fava Beans Rice with Raita,450,19,13,52,-,-,+
+Dinner,Vegetable Adzuki Beans Rice with Raita,440,18,12,52,-,-,+
+Dinner,Vegetable Mung Beans Rice with Raita,420,16,10,52,-,-,+
+Dinner,Vegetable Urad Beans Rice with Raita,460,20,13,53,+,+,+
+Dinner,Vegetable Masoor Beans Rice with Raita,430,17,11,52,-,+,+
+Dinner,Vegetable Toor Beans Rice with Raita,440,18,12,52,-,-,+
+Dinner,Vegetable Chana Beans Rice with Raita,450,19,13,52,-,+,+
+Dinner,Vegetable Rajma Beans Rice with Raita,460,20,14,53,-,+,+
