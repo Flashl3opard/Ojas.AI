@@ -123,6 +123,25 @@ export default function DoctorDashboard() {
     setNewAge("");
     setNewSex("O");
   }
+  type CardProps = {
+    title: string;
+    value: number;
+    icon: React.ReactNode;
+    className?: string; // ✅ allow extra styling
+  };
+  const Card: React.FC<CardProps> = ({ title, value, icon, className }) => {
+    return (
+      <div
+        className={`p-6 rounded-2xl shadow-lg flex items-center gap-4 ${className}`}
+      >
+        <div className="p-3 bg-white rounded-full">{icon}</div>
+        <div>
+          <h3 className="text-sm font-medium text-gray-500">{title}</h3>
+          <p className="text-2xl font-bold">{value}</p>
+        </div>
+      </div>
+    );
+  };
 
   return (
     <>
@@ -157,23 +176,27 @@ export default function DoctorDashboard() {
           </header>
 
           {/* Stats cards */}
-          <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 p-4 rounded-3xl ">
             <Card
+              className="bg-green-50"
               title="Total Patients"
               value={totals.totalPatients}
               icon={<FiUsers className="text-green-600 text-2xl" />}
             />
             <Card
+              className="bg-blue-50"
               title="Active Diet Plans"
               value={totals.activePlans}
               icon={<FiActivity className="text-blue-600 text-2xl" />}
             />
             <Card
+              className="bg-yellow-50"
               title="Follow-ups Due"
               value={totals.followUps}
               icon={<FiRefreshCw className="text-yellow-500 text-2xl" />}
             />
             <Card
+              className="bg-red-50"
               title="Low Adherence Alerts"
               value={totals.alerts}
               icon={<FiAlertTriangle className="text-red-500 text-2xl" />}
@@ -191,48 +214,57 @@ export default function DoctorDashboard() {
             <div className="overflow-x-auto">
               <table className="w-full border-collapse text-sm">
                 <thead>
-                  <tr className="text-gray-600 border-b">
-                    <th className="p-2 text-left">Name</th>
-                    <th className="p-2">Age / Sex</th>
-                    <th className="p-2">Dosha</th>
-                    <th className="p-2">Status</th>
-                    <th className="p-2">Adherence</th>
-                    <th className="p-2">Actions</th>
+                  <tr className="text-gray-500 border-b border-gray-200">
+                    <th className="p-3 text-left font-medium">Name</th>
+                    <th className="p-3 font-medium">Age / Sex</th>
+                    <th className="p-3 font-medium">Dosha</th>
+                    <th className="p-3 font-medium">Status</th>
+                    <th className="p-3 font-medium">Adherence</th>
+                    <th className="p-3 font-medium">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
                   {filtered.map((p) => (
-                    <tr key={p.id} className="border-b hover:bg-gray-50">
-                      <td className="p-2 font-medium">{p.name}</td>
-                      <td className="p-2 text-center">
+                    <tr
+                      key={p.id}
+                      className="border-b border-gray-100 hover:bg-gray-25"
+                    >
+                      <td className="p-3 font-medium text-gray-800">
+                        {p.name}
+                      </td>
+                      <td className="p-3 text-center text-gray-600">
                         {p.age ?? "-"} / {p.sex}
                       </td>
-                      <td className="p-2 text-center">{p.dosha}</td>
-                      <td className="p-2 text-center">{p.status}</td>
-                      <td className="p-2">
-                        <div className="w-28 bg-gray-100 rounded-full h-3 overflow-hidden">
+                      <td className="p-3 text-center text-gray-600">
+                        {p.dosha}
+                      </td>
+                      <td className="p-3 text-center text-gray-600">
+                        {p.status}
+                      </td>
+                      <td className="p-3">
+                        <div className="w-28 bg-gray-50 rounded-full h-2 overflow-hidden">
                           <div
-                            className="h-3 rounded-full"
+                            className="h-2 rounded-full transition-all duration-300"
                             style={{
                               width: `${p.adherence ?? 0}%`,
                               background:
                                 (p.adherence ?? 0) >= 75
-                                  ? "#34d399"
+                                  ? "#10b981"
                                   : (p.adherence ?? 0) >= 50
                                   ? "#f59e0b"
-                                  : "#f87171",
+                                  : "#ef4444",
                             }}
                           />
                         </div>
-                        <span className="text-xs text-gray-500">
+                        <span className="text-xs text-gray-400 mt-1 block">
                           {p.adherence ?? 0}%
                         </span>
                       </td>
-                      <td className="p-2 flex gap-2 justify-center">
-                        <button className="px-2 py-1 text-xs border rounded hover:bg-gray-50">
+                      <td className="p-3 flex gap-2 justify-center">
+                        <button className="px-3 py-1 text-xs border border-gray-200 rounded-md hover:bg-gray-50 text-gray-600 transition-colors">
                           View
                         </button>
-                        <button className="px-2 py-1 text-xs border rounded hover:bg-gray-50">
+                        <button className="px-3 py-1 text-xs border border-gray-200 rounded-md hover:bg-gray-50 text-gray-600 transition-colors">
                           Edit
                         </button>
                       </td>
@@ -240,7 +272,7 @@ export default function DoctorDashboard() {
                   ))}
                   {filtered.length === 0 && (
                     <tr>
-                      <td colSpan={6} className="p-4 text-center text-gray-500">
+                      <td colSpan={6} className="p-6 text-center text-gray-400">
                         No patients found
                       </td>
                     </tr>
