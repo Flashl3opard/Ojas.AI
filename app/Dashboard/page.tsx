@@ -9,6 +9,7 @@ import {
   FiRefreshCw,
 } from "react-icons/fi";
 import Navbar from "../components/Navbar";
+import { useRouter } from "next/navigation";
 
 type Patient = {
   id: string;
@@ -81,6 +82,8 @@ export default function DoctorDashboard() {
   const [newAge, setNewAge] = useState<number | "">("");
   const [newSex, setNewSex] = useState<Patient["sex"]>("O");
 
+  const router = useRouter();
+
   // Metrics
   const totals = useMemo(() => {
     const totalPatients = patients.length;
@@ -123,11 +126,12 @@ export default function DoctorDashboard() {
     setNewAge("");
     setNewSex("O");
   }
+
   type CardProps = {
     title: string;
     value: number;
     icon: React.ReactNode;
-    className?: string; // ✅ allow extra styling
+    className?: string;
   };
   const Card: React.FC<CardProps> = ({ title, value, icon, className }) => {
     return (
@@ -152,13 +156,13 @@ export default function DoctorDashboard() {
           <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
             <div>
               <h1 className="text-3xl font-bold text-gray-800">
-                Dr. Armaan Gupta's Dashboard
+                Dr. Armaan Gupta&apos;s Dashboard
               </h1>
               <p className="text-gray-500">
                 Manage patients, diet plans & adherence
               </p>
             </div>
-            <div className="flex gap-3">
+            <div className="flex flex-wrap gap-3">
               <input
                 type="text"
                 placeholder="Search patients..."
@@ -166,6 +170,32 @@ export default function DoctorDashboard() {
                 onChange={(e) => setQuery(e.target.value)}
                 className="border rounded-lg px-3 py-2 shadow-sm outline-none w-48"
               />
+              <select
+                value={doshaFilter}
+                onChange={(e) =>
+                  setDoshaFilter(e.target.value as Patient["dosha"] | "")
+                }
+                className="border rounded-lg px-3 py-2 shadow-sm outline-none"
+              >
+                <option value="">All Doshas</option>
+                <option value="Vata">Vata</option>
+                <option value="Pitta">Pitta</option>
+                <option value="Kapha">Kapha</option>
+                <option value="Mixed">Mixed</option>
+              </select>
+              <select
+                value={statusFilter}
+                onChange={(e) =>
+                  setStatusFilter(e.target.value as Patient["status"] | "")
+                }
+                className="border rounded-lg px-3 py-2 shadow-sm outline-none"
+              >
+                <option value="">All Status</option>
+                <option value="New">New</option>
+                <option value="On Plan">On Plan</option>
+                <option value="Follow-up Due">Follow-up Due</option>
+                <option value="Completed">Completed</option>
+              </select>
               <button
                 onClick={() => setShowAdd(true)}
                 className="bg-green-600 text-white px-4 py-2 rounded-lg shadow hover:bg-green-700 flex items-center gap-2"
@@ -267,6 +297,12 @@ export default function DoctorDashboard() {
                         <button className="px-3 py-1 text-xs border border-gray-200 rounded-md hover:bg-gray-50 text-gray-600 transition-colors">
                           Edit
                         </button>
+                        <button
+                          onClick={() => router.push("/diet-doc")}
+                          className="px-3 py-1 text-xs bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors"
+                        >
+                          Create Diet Plan
+                        </button>
                       </td>
                     </tr>
                   ))}
@@ -361,26 +397,5 @@ export default function DoctorDashboard() {
         </div>
       )}
     </>
-  );
-}
-
-/* Small reusable stat card */
-function Card({
-  title,
-  value,
-  icon,
-}: {
-  title: string;
-  value: number;
-  icon: React.ReactNode;
-}) {
-  return (
-    <div className="bg-white rounded-xl p-5 shadow flex items-center gap-4">
-      <div className="p-3 bg-gray-100 rounded-lg">{icon}</div>
-      <div>
-        <p className="text-gray-500 text-sm">{title}</p>
-        <h2 className="text-2xl font-bold">{value}</h2>
-      </div>
-    </div>
   );
 }

@@ -1,8 +1,8 @@
 "use client";
 
 import type React from "react";
-
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { Leaf } from "lucide-react";
@@ -19,6 +19,8 @@ const Logo = () => (
 );
 
 const Page = () => {
+  const router = useRouter();
+
   const [isRegistering, setIsRegistering] = useState<boolean>(false);
   const [userRole, setUserRole] = useState<"patient" | "doctor" | "admin" | "">(
     ""
@@ -32,10 +34,12 @@ const Page = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
     if (!userRole) {
       alert("Please select a role.");
       return;
     }
+
     if (isRegistering) {
       console.log(`Registering as ${userRole}:`, {
         fullName,
@@ -45,10 +49,24 @@ const Page = () => {
         medicalLicenseNumber:
           userRole === "doctor" ? medicalLicenseNumber : undefined,
       });
-      // Add registration API call
+      alert("Registered successfully ✅");
+      router.push("/Dashboard"); // redirect after registration
     } else {
+      // DEMO LOGIN CHECK
+      if (email === "id-1111" && password === "1111") {
+        alert("Demo login successful ✅");
+        console.log("Logged in as demo user:", {
+          email,
+          password,
+          role: userRole,
+        });
+        router.push("/Dashboard"); // redirect demo user
+        return;
+      }
+
       console.log(`Logging in as ${userRole}:`, { email, password });
-      // Add login API call
+      alert("Logged in successfully ✅");
+      router.push("/Dashboard"); // redirect after login
     }
   };
 
@@ -86,6 +104,19 @@ const Page = () => {
               {isRegistering ? "Create Your Account" : "Welcome Back"}
             </h2>
 
+            {/* Demo Hint Box (only in login mode) */}
+            {!isRegistering && (
+              <div className="mb-6 p-4 border border-green-300 bg-green-50 rounded-lg text-sm text-green-800">
+                <p className="font-semibold">Demo Credentials</p>
+                <p>
+                  Email: <span className="font-mono">id-1111</span>
+                </p>
+                <p>
+                  Password: <span className="font-mono">1111</span>
+                </p>
+              </div>
+            )}
+
             <form onSubmit={handleSubmit} className="space-y-5">
               {isRegistering && (
                 <div>
@@ -117,8 +148,8 @@ const Page = () => {
                 </label>
                 <input
                   id="email"
-                  type="email"
-                  placeholder="you@example.com"
+                  type="text"
+                  placeholder="you@example.com or id-1111"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="w-full py-3 px-4 border border-gray-300 rounded-lg text-gray-700 focus:outline-none focus:border-green-500 transition-colors duration-200"
