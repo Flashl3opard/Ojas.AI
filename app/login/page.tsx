@@ -7,9 +7,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { Leaf } from "lucide-react";
 
-// Logo Component
+// Logo Component - Hidden on mobile with md:flex
 const Logo = () => (
-  <Link href="/" className="flex items-center space-x-2 group">
+  <Link href="/" className="hidden md:flex items-center space-x-2 group">
     <Leaf className="w-7 h-7 text-green-600 transition-transform duration-300 group-hover:rotate-12 group-hover:scale-110" />
     <span className="text-xl md:text-2xl font-extrabold">
       <span className="text-green-600">Ojas</span>
@@ -73,8 +73,8 @@ const Page = () => {
   return (
     <div className="flex items-center justify-center min-h-screen p-4 bg-gray-50">
       <div className="flex flex-col lg:flex-row items-center justify-center w-full max-w-5xl gap-12 lg:gap-16">
-        {/* Left section: Image */}
-        <div className="flex-1 flex justify-center items-center">
+        {/* Left section: Image (hidden on mobile) */}
+        <div className="hidden md:flex flex-1 justify-center items-center">
           <div className="relative">
             <Image
               src="/images/image2.png"
@@ -82,15 +82,7 @@ const Page = () => {
               width={400}
               height={400}
               priority
-              className="hidden lg:block rounded-xl"
-            />
-            <Image
-              src="/images/image2.png"
-              alt="Ayurvedic Diet Illustration"
-              width={280}
-              height={280}
-              priority
-              className="block lg:hidden rounded-xl"
+              className="rounded-xl"
             />
           </div>
         </div>
@@ -98,7 +90,10 @@ const Page = () => {
         {/* Right section: Login/Registration Form */}
         <div className="flex-1 w-full max-w-md">
           <div className="p-6">
-            <Logo />
+            {/* Logo - hidden on mobile */}
+            <div className="hidden md:flex">
+              <Logo />
+            </div>
 
             <h2 className="text-2xl font-bold text-gray-800 mb-8 mt-6">
               {isRegistering ? "Create Your Account" : "Welcome Back"}
