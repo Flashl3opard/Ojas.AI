@@ -2,7 +2,7 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Pie } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -16,11 +16,11 @@ import {
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 // Your other functions and data
-const doshaDescriptions: Record<string, string> = {
-  Vata: "This type is full of energy and creativity",
-  Pitta: "This type are sharp thinkers",
-  Kapha: "This type is warm of heart and steady of mind",
-};
+// const doshaDescriptions: Record<string, string> = {
+//   Vata: "This type is full of energy and creativity",
+//   Pitta: "This type are sharp thinkers",
+//   Kapha: "This type is warm of heart and steady of mind",
+// };
 
 const doshaDetails: Record<string, { text: string }> = {
   Vata: {
@@ -34,12 +34,12 @@ const doshaDetails: Record<string, { text: string }> = {
   },
 };
 
-function getBmiScale(bmi: number) {
-  if (bmi < 18.5) return "Underweight";
-  if (bmi >= 18.5 && bmi < 25) return "Healthy Weight";
-  if (bmi >= 25 && bmi < 30) return "Overweight";
-  return "Obese";
-}
+// function getBmiScale(bmi: number) {
+//   if (bmi < 18.5) return "Underweight";
+//   if (bmi >= 18.5 && bmi < 25) return "Healthy Weight";
+//   if (bmi >= 25 && bmi < 30) return "Overweight";
+//   return "Obese";
+// }
 
 // Accordion Component
 function Accordion({
@@ -95,18 +95,18 @@ function Accordion({
 // Main client component
 export default function AssessmentResultClient() {
   const searchParams = useSearchParams();
-  const [bmi, setBmi] = useState(22.5);
-  const [height, setHeight] = useState(175);
-  const [weight, setWeight] = useState(70);
+  // const [bmi, setBmi] = useState(22.5);
+  // const [height, setHeight] = useState(175);
+  // const [weight, setWeight] = useState(70);
 
   const vata = Number(searchParams.get("vata")) || 0;
   const pitta = Number(searchParams.get("pitta")) || 0;
   const kapha = Number(searchParams.get("kapha")) || 0;
 
-  useEffect(() => {
-    const bmiValue = weight / Math.pow(height / 100, 2);
-    setBmi(parseFloat(bmiValue.toFixed(2)));
-  }, [weight, height]);
+  // useEffect(() => {
+  //   const bmiValue = weight / Math.pow(height / 100, 2);
+  //   setBmi(parseFloat(bmiValue.toFixed(2)));
+  // }, [weight, height]);
 
   const doshaResult = [
     { name: "Vata", value: vata },
@@ -213,11 +213,11 @@ export default function AssessmentResultClient() {
         {/* Health scale box */}
         <div className="bg-[#C5DECB] rounded-2xl shadow-lg p-8 flex flex-col gap-5 items-center">
           <div className="text-lg font-medium text-[#223A34]">
-            BMI: <span className="font-bold text-[#285C4D]">{bmi}</span>
+            {/* BMI: <span className="font-bold text-[#285C4D]">{bmi}</span> */}
           </div>
           <div className="text-lg font-medium text-[#223A34]">
             Health Scale:{" "}
-            <span className="font-bold text-[#285C4D]">{getBmiScale(bmi)}</span>
+            {/* <span className="font-bold text-[#285C4D]">{getBmiScale(bmi)}</span> */}
           </div>
         </div>
         {/* Dosha Accordions */}
