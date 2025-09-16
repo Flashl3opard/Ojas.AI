@@ -1,6 +1,7 @@
 // app/assessment/page.tsx
 "use client";
 
+import React from "react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Navbar from "../components/Navbar";
@@ -104,11 +105,13 @@ export default function AssessmentPage() {
   const router = useRouter();
 
   const handleAnswer = (id: string, value: string) => {
-    setAnswers({ ...answers, [id]: value });
+    // use functional update to avoid stale state
+    setAnswers((prev) => ({ ...prev, [id]: value }));
   };
 
   const calculateDosha = () => {
-    let counts = { vata: 0, pitta: 0, kapha: 0 };
+    // eslint: prefer-const -> use const because we don't reassign `counts`
+    const counts = { vata: 0, pitta: 0, kapha: 0 };
     const answeredQuestions = Object.values(answers).length;
 
     if (answeredQuestions === 0) {
