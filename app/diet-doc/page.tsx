@@ -31,8 +31,19 @@ type PatientDetails = {
   summary: string;
 };
 
+type DoshaType = "Vata" | "Pitta"; // Add other doshas if needed
+type MealNameType = "Breakfast" | "Lunch" | "Dinner";
+
+// -------------------- Constants --------------------
+const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+const mealsOfDay = [
+  { name: "Breakfast", time: "7:00 AM" },
+  { name: "Lunch", time: "1:00 PM" },
+  { name: "Dinner", time: "8:00 PM" },
+];
+
 // -------------------- Mock DB --------------------
-const doshaFoods = {
+const doshaFoods: Record<DoshaType, Record<MealNameType, FoodItem[]>> = {
   Vata: {
     Breakfast: [
       {
@@ -323,17 +334,16 @@ export default function App() {
 
   const doctorName =
     "Dr. Armaan Gupta (Gold medalist, PHD(BMMS), Ayurveda Specialist)";
-  const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-  const mealsOfDay = [
-    { name: "Breakfast", time: "7:00 AM" },
-    { name: "Lunch", time: "1:00 PM" },
-    { name: "Dinner", time: "8:00 PM" },
-  ];
 
   useEffect(() => {
-    const initialPlan = daysOfWeek.map((day) => ({
+    // Initialize the diet plan with empty meals for each day
+    const initialPlan: DayPlan[] = daysOfWeek.map((day) => ({
       day,
-      meals: mealsOfDay.map((meal) => ({ ...meal, foodItems: [] })),
+      meals: mealsOfDay.map((meal) => ({
+        time: meal.time,
+        name: meal.name,
+        foodItems: [],
+      })),
     }));
     setDietPlan(initialPlan);
   }, []);
@@ -374,12 +384,12 @@ export default function App() {
             <h2 className="text-xl font-semibold text-gray-700 mb-4">
               Patient: {patient.name} ({patient.dosha})
             </h2>
-            <div className="flex gap-2 mb-6">
+            <div className="flex gap-2 mb-6 overflow-x-auto pb-2">
               {daysOfWeek.map((day, idx) => (
                 <button
                   key={day}
                   onClick={() => setCurrentDayIndex(idx)}
-                  className={`px-4 py-2 rounded-full font-medium transition ${
+                  className={`px-4 py-2 rounded-full font-medium transition flex-shrink-0 ${
                     currentDayIndex === idx
                       ? "bg-green-600 text-white"
                       : "text-gray-600 hover:bg-gray-100"
@@ -439,8 +449,8 @@ export default function App() {
 
                   {selectedMealIndex === mealIndex && (
                     <div className="mt-2 max-h-40 overflow-y-auto border rounded-md bg-white shadow-inner">
-                      {doshaFoods[patient.dosha as keyof typeof doshaFoods][
-                        meal.name as keyof typeof doshaFoods.Vata
+                      {doshaFoods[patient.dosha as DoshaType][
+                        meal.name as MealNameType
                       ].map((food) => (
                         <button
                           key={food.id}
@@ -466,7 +476,7 @@ export default function App() {
     <div className="flex bg-gray-50 min-h-screen text-slate-800 p-6 md:p-10">
       <div className="max-w-6xl mx-auto w-full bg-white rounded-3xl shadow-lg p-8">
         {/* Header */}
-        <header className="flex justify-between items-center border-b pb-4 mb-6">
+        <header className="flex justify-between items-center border-b pb-4 mb-6 print:hidden">
           <div>
             <h1 className="text-2xl font-bold text-green-700">
               Ayurvedic Diet Plan Report

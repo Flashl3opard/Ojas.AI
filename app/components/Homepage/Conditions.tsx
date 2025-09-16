@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  Activity,
   Brain,
   Frown,
   Weight,
