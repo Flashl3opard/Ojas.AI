@@ -35,7 +35,7 @@ export default function Navbar() {
             </Link>
           </li>
           <li>
-            <Link href="/diet" className={linkClasses}>
+            <Link href="/diet-doc" className={linkClasses}>
               Weekly Diet Plan
             </Link>
           </li>
