@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { Leaf } from "lucide-react";
+// import { CgProfile } from "react-icons/cg";
 
 // Logo Component - Hidden on mobile with md:flex
 const Logo = () => (
@@ -41,6 +42,23 @@ const Page = () => {
     }
 
     if (isRegistering) {
+      // Registration logic
+      const userData = {
+        name: fullName,
+        email: email,
+        role: userRole,
+        phoneNumber: phoneNumber,
+        profilePicture: "https://via.placeholder.com/40",
+        ...(userRole === "doctor" && { medicalLicenseNumber }),
+      };
+
+      // Set login status in localStorage
+      localStorage.setItem("isLoggedIn", "true");
+      localStorage.setItem("userData", JSON.stringify(userData));
+
+      // Dispatch custom event to notify navbar
+      window.dispatchEvent(new Event("loginStateChange"));
+
       console.log(`Registering as ${userRole}:`, {
         fullName,
         email,
@@ -52,19 +70,42 @@ const Page = () => {
       alert("Registered successfully ✅");
       router.push("/Dashboard"); // redirect after registration
     } else {
+      // Login logic
+      let userData;
+
       // DEMO LOGIN CHECK
       if (email === "id-1111" && password === "1111") {
-        alert("Demo login successful ✅");
+        userData = {
+          name: "Demo User",
+          email: "demo@ojas.ai",
+          role: userRole,
+          profilePicture: "https://via.placeholder.com/40",
+        };
+
         console.log("Logged in as demo user:", {
           email,
           password,
           role: userRole,
         });
-        router.push("/Dashboard"); // redirect demo user
-        return;
+      } else {
+        // Regular login (accept any credentials for demo)
+        userData = {
+          name: email.split("@")[0] || email, // Use email prefix as name
+          email: email,
+          role: userRole,
+          profilePicture: "https://via.placeholder.com/40",
+        };
+
+        console.log(`Logging in as ${userRole}:`, { email, password });
       }
 
-      console.log(`Logging in as ${userRole}:`, { email, password });
+      // Set login status in localStorage
+      localStorage.setItem("isLoggedIn", "true");
+      localStorage.setItem("userData", JSON.stringify(userData));
+
+      // Dispatch custom event to notify navbar
+      window.dispatchEvent(new Event("loginStateChange"));
+
       alert("Logged in successfully ✅");
       router.push("/Dashboard"); // redirect after login
     }
@@ -108,6 +149,9 @@ const Page = () => {
                 </p>
                 <p>
                   Password: <span className="font-mono">1111</span>
+                </p>
+                <p className="mt-2 text-xs text-green-700">
+                  Or enter any email/password to login
                 </p>
               </div>
             )}

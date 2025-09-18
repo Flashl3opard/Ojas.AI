@@ -2,10 +2,49 @@
 
 import Link from "next/link";
 import Logo from "./Logo";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { CgProfile } from "react-icons/cg";
+
+interface User {
+  name: string;
+  email: string;
+  profilePicture: string;
+}
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
+
+  // Check localStorage for login status on component mount and when storage changes
+  useEffect(() => {
+    const checkLoginStatus = () => {
+      const loginStatus = localStorage.getItem("isLoggedIn");
+      const userData = localStorage.getItem("userData");
+
+      if (loginStatus === "true" && userData) {
+        setIsLoggedIn(true);
+        setUser(JSON.parse(userData) as User);
+      } else {
+        setIsLoggedIn(false);
+        setUser(null);
+      }
+    };
+
+    // Check on mount
+    checkLoginStatus();
+
+    // Listen for storage changes (when login happens from another tab/page)
+    window.addEventListener("storage", checkLoginStatus);
+
+    // Custom event listener for same-page login
+    window.addEventListener("loginStateChange", checkLoginStatus);
+
+    return () => {
+      window.removeEventListener("storage", checkLoginStatus);
+      window.removeEventListener("loginStateChange", checkLoginStatus);
+    };
+  }, []);
 
   const linkClasses = "hover:text-green-600 transition";
   const loginButtonClasses =
@@ -15,6 +54,21 @@ export default function Navbar() {
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  // Handle logout
+  const handleLogout = () => {
+    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("userData");
+    setIsLoggedIn(false);
+    setUser(null);
+
+    // Dispatch custom event to update other components if needed
+    window.dispatchEvent(new Event("loginStateChange"));
+
+    if (isMenuOpen) {
+      setIsMenuOpen(false);
+    }
   };
 
   return (
@@ -51,14 +105,30 @@ export default function Navbar() {
           </li>
         </ul>
 
-        {/* Desktop Auth Buttons */}
+        {/* Desktop Auth Buttons / Profile Icon */}
         <div className="hidden md:flex items-center">
-          <Link href="/login" className={loginButtonClasses}>
-            Login
-          </Link>
-          <Link href="/signup" className={signupButtonClasses}>
-            Signup
-          </Link>
+          {isLoggedIn ? (
+            <div className="flex items-center space-x-4">
+              <Link href="/profile" className="text-white">
+                <CgProfile size={32} className="text-white" />
+              </Link>
+              <button
+                onClick={handleLogout}
+                className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition"
+              >
+                Logout
+              </button>
+            </div>
+          ) : (
+            <>
+              <Link href="/login" className={loginButtonClasses}>
+                Login
+              </Link>
+              <Link href="/signup" className={signupButtonClasses}>
+                Signup
+              </Link>
+            </>
+          )}
         </div>
 
         {/* Mobile hamburger button */}
@@ -136,22 +206,48 @@ export default function Navbar() {
             </li>
           </ul>
 
-          {/* Mobile Auth Buttons */}
+          {/* Mobile Auth Buttons / Profile Icon */}
           <div className="px-6 pb-4 space-y-3">
-            <Link
-              href="/login"
-              className="block text-center bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Login
-            </Link>
-            <Link
-              href="/signup"
-              className="block text-center border border-green-600 text-green-600 px-4 py-2 rounded-lg hover:bg-green-100 transition bg-white"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Signup
-            </Link>
+            {isLoggedIn ? (
+              <>
+                <div className="text-white text-center text-sm mb-2">
+                  Welcome!
+                </div>
+                <Link
+                  href="/profile"
+                  className="block text-center border border-white text-white px-4 py-2 rounded-lg transition"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  <div className="flex justify-center items-center space-x-2">
+                    <CgProfile size={24} className="text-white" />
+                    <span>View Profile</span>
+                  </div>
+                </Link>
+                <button
+                  onClick={handleLogout}
+                  className="block w-full text-center bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition"
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  href="/login"
+                  className="block text-center bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Login
+                </Link>
+                <Link
+                  href="/signup"
+                  className="block text-center border border-green-600 text-green-600 px-4 py-2 rounded-lg hover:bg-green-100 transition bg-white"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Signup
+                </Link>
+              </>
+            )}
           </div>
         </div>
       )}
