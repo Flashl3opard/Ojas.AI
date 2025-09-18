@@ -1,138 +1,258 @@
 "use client";
 
-import { FaLeaf, FaFacebook, FaTwitter } from "react-icons/fa";
+import Link from "next/link";
+// import Logo from "./Logo";
+import { useState, useEffect } from "react";
+import { CgProfile } from "react-icons/cg";
 
-export default function Page() {
+interface User {
+  name: string;
+  email: string;
+  profilePicture: string;
+}
+
+export default function Navbar() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
+
+  // Check localStorage for login status on component mount and when storage changes
+  useEffect(() => {
+    const checkLoginStatus = () => {
+      const loginStatus = localStorage.getItem("isLoggedIn");
+      const userData = localStorage.getItem("userData");
+
+      if (loginStatus === "true" && userData) {
+        setIsLoggedIn(true);
+        setUser(JSON.parse(userData) as User);
+      } else {
+        setIsLoggedIn(false);
+        setUser(null);
+      }
+    };
+
+    // Check on mount
+    checkLoginStatus();
+
+    // Listen for storage changes (when login happens from another tab/page)
+    window.addEventListener("storage", checkLoginStatus);
+
+    // Custom event listener for same-page login
+    window.addEventListener("loginStateChange", checkLoginStatus);
+
+    return () => {
+      window.removeEventListener("storage", checkLoginStatus);
+      window.removeEventListener("loginStateChange", checkLoginStatus);
+    };
+  }, []);
+
+  const linkClasses = "hover:text-green-600 transition";
+  const loginButtonClasses =
+    "bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition";
+  const signupButtonClasses =
+    "ml-3 border border-green-600 text-green-600 px-4 py-2 rounded-lg hover:bg-green-100 transition bg-white";
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  // Handle logout
+  const handleLogout = () => {
+    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("userData");
+    setIsLoggedIn(false);
+    setUser(null);
+
+    // Dispatch custom event to update other components if needed
+    window.dispatchEvent(new Event("loginStateChange"));
+
+    if (isMenuOpen) {
+      setIsMenuOpen(false);
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-[#f9fafb] flex flex-col">
-      {/* Header */}
-      <div className="bg-[#1A3129] text-white text-center py-12">
-        <h1 className="text-3xl font-bold text-green-400">Contact Us</h1>
-        <p className="mt-2 text-sm max-w-2xl mx-auto">
-          We’d love to hear from you! Whether you have a question about our
-          Ayurvedic plans, need guidance, or just want to connect — reach out
-          below.
-        </p>
-      </div>
+    <nav className="bg-[#1A3129] shadow-sm relative z-40">
+      <div className="flex items-center justify-between py-4 px-6 md:px-16">
+        {/* <Logo /> */}
 
-      {/* Contact Section */}
-      <div className="flex-1 max-w-6xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-2 gap-10">
-        {/* Contact Info */}
-        <div className="bg-white shadow-lg rounded-2xl p-8 border border-gray-100">
-          <h2 className="text-2xl font-bold text-green-700 mb-6">
-            Get in Touch
-          </h2>
-          <p className="text-sm mb-8 text-gray-600">
-            Have questions about Ayurvedic wellness, dosha plans, or
-            collaborations? Contact us anytime — we’d love to help you.
-          </p>
+        {/* Desktop Navigation links */}
+        <ul className="hidden md:flex space-x-8 text-white">
+          <li>
+            <Link href="/" className={linkClasses}>
+              Home
+            </Link>
+          </li>
+          <li>
+            <Link href="/assessment" className={linkClasses}>
+              Dosha Assessment
+            </Link>
+          </li>
+          <li>
+            <Link href="/diet-doc" className={linkClasses}>
+              Weekly Diet Plan
+            </Link>
+          </li>
+          <li>
+            <Link href="/remedies" className={linkClasses}>
+              Remedies
+            </Link>
+          </li>
+          <li>
+            <Link href="/contact" className={linkClasses}>
+              Contact
+            </Link>
+          </li>
+        </ul>
 
-          {/* Contact Details */}
-          <div className="space-y-5">
-            <div className="flex items-center space-x-3">
-              <span className="text-green-600 text-xl">📧</span>
-              <span className="text-gray-700 text-sm">
-                support@ayurwellness.com
-              </span>
+        {/* Desktop Auth Buttons / Profile Icon */}
+        <div className="hidden md:flex items-center">
+          {isLoggedIn ? (
+            <div className="flex items-center space-x-4">
+              <Link
+                href="/profile"
+                className="text-white hover:text-green-400 transition-colors"
+              >
+                <CgProfile className="w-10 h-10 cursor-pointer" />
+              </Link>
+              <span className="text-white text-sm">{user?.name || "User"}</span>
+              <button
+                onClick={handleLogout}
+                className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition"
+              >
+                Logout
+              </button>
             </div>
-            <div className="flex items-center space-x-3">
-              <span className="text-green-600 text-xl">📱</span>
-              <span className="text-gray-700 text-sm">+91 98765-43210</span>
-            </div>
-            <div className="flex items-center space-x-3">
-              <span className="text-green-600 text-xl">📞</span>
-              <span className="text-gray-700 text-sm">+91 080-22334455</span>
-            </div>
-            <div className="flex items-start space-x-3">
-              <span className="text-green-600 text-xl">📍</span>
-              <span className="text-gray-700 text-sm leading-relaxed">
-                Ayurvedic Wellness Center <br />
-                221B Green Street, Civil Lines <br />
-                Jabalpur, Madhya Pradesh, India
-              </span>
-            </div>
-          </div>
-
-          {/* Divider */}
-          <div className="border-t border-gray-200 my-6"></div>
-
-          {/* Social Links */}
-          <h3 className="text-lg font-semibold text-green-700 mb-3">
-            Connect with Us
-          </h3>
-          <div className="flex space-x-5 text-2xl">
-            <a
-              href="#"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-green-600 transition"
-            >
-              <FaLeaf />
-            </a>
-            <a
-              href="#"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-green-600 transition"
-            >
-              <FaFacebook />
-            </a>
-            <a
-              href="#"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-green-600 transition"
-            >
-              <FaTwitter />
-            </a>
-          </div>
+          ) : (
+            <>
+              <Link href="/login" className={loginButtonClasses}>
+                Login
+              </Link>
+              <Link href="/signup" className={signupButtonClasses}>
+                Signup
+              </Link>
+            </>
+          )}
         </div>
 
-        {/* Contact Form */}
-        <div className="bg-white shadow-md rounded-2xl p-8">
-          <h2 className="text-xl font-bold text-green-700 mb-4">
-            Send a Message
-          </h2>
-          <form className="space-y-5">
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Your Name
-              </label>
-              <input
-                type="text"
-                className="w-full mt-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-                placeholder="Enter your name"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Email Address
-              </label>
-              <input
-                type="email"
-                className="w-full mt-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-                placeholder="Enter your email"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Message
-              </label>
-              <textarea
-                rows={4}
-                className="w-full mt-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-                placeholder="Write your message..."
-              ></textarea>
-            </div>
-            <button
-              type="submit"
-              className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition"
-            >
-              Send Message
-            </button>
-          </form>
-        </div>
+        {/* Mobile hamburger button */}
+        <button
+          className="md:hidden text-white focus:outline-none focus:ring-2 focus:ring-green-600 p-2 rounded"
+          onClick={toggleMenu}
+          aria-label="Toggle navigation menu"
+        >
+          <svg
+            className="w-6 h-6"
+            fill="none"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            {isMenuOpen ? (
+              <path d="M6 18L18 6M6 6l12 12" />
+            ) : (
+              <path d="M4 6h16M4 12h16M4 18h16" />
+            )}
+          </svg>
+        </button>
       </div>
-    </div>
+
+      {/* Mobile menu */}
+      {isMenuOpen && (
+        <div className="md:hidden bg-[#1A3129] border-t border-green-800 relative z-50 shadow-lg">
+          <ul className="py-4 px-6 space-y-4 text-white">
+            <li>
+              <Link
+                href="/"
+                className={linkClasses}
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Home
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/assessment"
+                className={linkClasses}
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Dosha Assessment
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/diet"
+                className={linkClasses}
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Weekly Diet Plan
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/remedies"
+                className={linkClasses}
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Remedies
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/contact"
+                className={linkClasses}
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Contact
+              </Link>
+            </li>
+          </ul>
+
+          {/* Mobile Auth Buttons / Profile Icon */}
+          <div className="px-6 pb-4 space-y-3">
+            {isLoggedIn ? (
+              <>
+                <div className="text-white text-center text-sm mb-2 flex items-center justify-center space-x-2">
+                  <CgProfile className="w-6 h-6" />
+                  <span>Welcome, {user?.name || "User"}!</span>
+                </div>
+                <Link
+                  href="/profile"
+                  className="block text-center border border-white text-white px-4 py-2 rounded-lg transition hover:bg-white hover:text-[#1A3129]"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  View Profile
+                </Link>
+                <button
+                  onClick={handleLogout}
+                  className="block w-full text-center bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition"
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  href="/login"
+                  className="block text-center bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Login
+                </Link>
+                <Link
+                  href="/signup"
+                  className="block text-center border border-green-600 text-green-600 px-4 py-2 rounded-lg hover:bg-green-100 transition bg-white"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Signup
+                </Link>
+              </>
+            )}
+          </div>
+        </div>
+      )}
+    </nav>
   );
 }
