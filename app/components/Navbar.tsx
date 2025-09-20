@@ -106,11 +106,15 @@ export default function Navbar() {
         </ul>
 
         {/* Desktop Auth Buttons / Profile Icon */}
-        <div className="hidden md:flex items-center">
-          {isLoggedIn ? (
-            <div className="flex items-center space-x-4">
-              <Link href="/profile" className="text-white">
+        <div className="hidden md:flex items-center space-x-4">
+          {isLoggedIn && user ? (
+            <>
+              <Link
+                href="/profile"
+                className="flex items-center text-white space-x-2"
+              >
                 <CgProfile size={32} className="text-white" />
+                <span>{user.name}</span>
               </Link>
               <button
                 onClick={handleLogout}
@@ -118,7 +122,7 @@ export default function Navbar() {
               >
                 Logout
               </button>
-            </div>
+            </>
           ) : (
             <>
               <Link href="/login" className={loginButtonClasses}>
@@ -208,10 +212,10 @@ export default function Navbar() {
 
           {/* Mobile Auth Buttons / Profile Icon */}
           <div className="px-6 pb-4 space-y-3">
-            {isLoggedIn ? (
+            {isLoggedIn && user ? (
               <>
                 <div className="text-white text-center text-sm mb-2">
-                  Welcome!
+                  Welcome, {user.name}!
                 </div>
                 <Link
                   href="/profile"

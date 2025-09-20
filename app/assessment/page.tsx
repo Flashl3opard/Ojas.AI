@@ -105,7 +105,6 @@ export default function AssessmentPage() {
   const router = useRouter();
 
   const handleAnswer = (id: string, value: string) => {
-    // use functional update to avoid stale state
     setAnswers((prev) => ({ ...prev, [id]: value }));
   };
 
