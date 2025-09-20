@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Ayurveda App",
+  title: "Ojas AI - A comprehensive Ayurvedic Diet Plan Recommender",
   description: "Personalized Ayurvedic Diet Plan Recommendation System",
 };
 
