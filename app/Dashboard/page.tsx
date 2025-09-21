@@ -39,7 +39,7 @@ export default function DoctorDashboard() {
       status: "Follow-up Due",
       adherence: 55,
       age: 27,
-      sex: "F",
+      sex: "M",
     },
     {
       id: "p3",
