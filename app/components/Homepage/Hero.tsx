@@ -30,12 +30,23 @@ export default function Hero() {
           Get personalized diet recommendations based on your unique body
           constitution
         </p>
-        <Link
-          href="/assessment"
-          className="inline-block bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition"
-        >
-          Get Started
-        </Link>
+
+        {/* Buttons container */}
+        <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+          <Link
+            href="/assessment"
+            className="inline-block bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition"
+          >
+            Get Started
+          </Link>
+
+          <Link
+            href="/diet-doc"
+            className="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition"
+          >
+            Dashboard
+          </Link>
+        </div>
       </div>
 
       <div
