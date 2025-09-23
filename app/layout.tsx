@@ -1,16 +1,14 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Work_Sans } from "next/font/google";
 import "./globals.css";
 import AOSProvider from "./components/AOSProvider";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+// Work Sans font with normal and bold weights
+const workSans = Work_Sans({
+  variable: "--font-work-sans",
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  weight: ["400", "700"],
+  style: ["normal"],
 });
 
 export const metadata: Metadata = {
@@ -25,9 +23,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${workSans.variable} antialiased`}>
         <AOSProvider>{children}</AOSProvider>
       </body>
     </html>
