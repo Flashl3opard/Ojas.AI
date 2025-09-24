@@ -22,7 +22,7 @@ Generally, a Vata person is thin, talkative, and restless. They tend to have dry
       name: "Pitta",
       imgSrc: "/images/fire.png",
       intro:
-        "Pitta types are sharp thinkers, intense, and driven by fire. They are focused, organized, and full of ambition.",
+        "Pitta types are sharp thinker, intense, and driven by fire. They are focused, organized, and full of ambition.",
       details: `Pitta is formed by the combination of fire and water. Pitta plays a key role in digestion, metabolism, and nutritional absorption. It is located in the small intestine and is the seat of Agni (digestive fire).
 
 Pitta controls hormonal secretions, enzymatic functions, metabolism, skin health, and liver health. It represents intelligence, understanding, emotions, and experience. It also balances body temperature.
