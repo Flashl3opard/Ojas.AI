@@ -11,7 +11,7 @@ export default function DoshaBlogPage() {
       imgSrc: "/images/wind.png",
       intro:
         "Vata is full of energy, creativity, and movement. It governs all bodily motion and communication, including breathing, muscle and tissue activity, and mental processes.",
-      details: `Vata is formed by the combination of air and space. The seat of Vata is below the umbilicus. 
+      details: `Vata is formed by the combination of air and space. The seat of Vata is below the umbilicus .. 
 It controls mind, creativity, and impulsive responses. It governs all movements, air flow, all muscle and bone functions, and communication throughout the mind and the nervous system.
 
 When Vata is out of balance, one may feel disconnected from body and mind, experiencing anxiety, insomnia, constipation, bloating, joint pain, and dryness. 
