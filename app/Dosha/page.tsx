@@ -14,7 +14,7 @@ export default function DoshaBlogPage() {
       details: `Vata is formed by the combination of air and space. The seat of Vata is below the umbilicus .. 
 It controls mind, creativity, and impulsive responses. It governs all movements, air flow, all muscle and bone functions, and communication throughout the mind and the nervous system.
 
-When Vata is out of balance, one may feel disconnected from body and mind, experiencing anxiety, insomnia, constipation, bloating, joint pain, and dryness. 
+When Vata is out of balance, one may feel disconnected from the  body and mind, experiencing anxiety, insomnia, constipation, bloating, joint pain, and dryness. 
 
 Generally, a Vata person is thin, talkative, and restless. They tend to have dry skin, brittle nails, thin hair, and small, slightly sunken eyes. Vata types prefer warm weather and may have difficulty tolerating cold climates.`,
     },
