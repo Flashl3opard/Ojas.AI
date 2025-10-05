@@ -1,12 +1,6 @@
-import React, {
-  useState,
-  useRef,
-  useEffect,
-  useCallback,
-  HTMLProps,
-} from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 
-// Define constants for the Gemini API, as required in this environment
+// Define constants for the Gemini API
 const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
 const modelName = "gemini-2.5-flash-preview-05-20"; // Standard model for text generation
 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${apiKey}`;
@@ -18,10 +12,7 @@ interface Message {
   text: string;
 }
 
-// Interface for icon components to allow passing standard HTML attributes like className
-interface IconProps extends HTMLProps<SVGSVGElement> {}
-
-// **New: API Content types for conversational history**
+// API Content types for conversational history
 interface ApiPart {
   text: string;
 }
@@ -31,9 +22,16 @@ interface ApiContent {
   parts: ApiPart[];
 }
 
-// --- Component Setup ---
+// System instruction for the chatbot persona
+const SYSTEM_INSTRUCTION: string = `
+You are Ojas AI — a friendly and supportive chatbot specializing in Ayurveda. 
+Answer only Ayurveda-related queries (natural remedies, herbs, doshas, wellness guidance). 
+If the user asks a question unrelated to Ayurveda, politely steer the conversation back.
+Keep responses warm, encouraging, and easy to understand.
+`;
 
-const SendIcon: React.FC<IconProps> = (props) => (
+// --- Icon Components ---
+const SendIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="20"
@@ -44,14 +42,14 @@ const SendIcon: React.FC<IconProps> = (props) => (
     strokeWidth="2"
     strokeLinecap="round"
     strokeLinejoin="round"
-    {...props} // Spread props (including className) onto the SVG element
+    {...props}
   >
-    <line x1="22" y1="2" x2="11" y2="13"></line>
-    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+    <line x1="22" y1="2" x2="11" y2="13" />
+    <polygon points="22 2 15 22 11 13 2 9 22 2" />
   </svg>
 );
 
-const RobotIcon: React.FC<IconProps> = (props) => (
+const RobotIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="28"
@@ -62,48 +60,36 @@ const RobotIcon: React.FC<IconProps> = (props) => (
     strokeWidth="2"
     strokeLinecap="round"
     strokeLinejoin="round"
-    {...props} // Spread props (including className) onto the SVG element
+    {...props}
   >
-    <rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect>
-    <path d="M7 10h.01"></path>
-    <path d="M17 10h.01"></path>
-    <path d="M7 14h.01"></path>
-    <path d="M17 14h.01"></path>
-    <path d="M12 18v-4"></path>
+    <rect x="2" y="4" width="20" height="16" rx="2" ry="2" />
+    <path d="M7 10h.01" />
+    <path d="M17 10h.01" />
+    <path d="M7 14h.01" />
+    <path d="M17 14h.01" />
+    <path d="M12 18v-4" />
   </svg>
 );
 
-// System instruction for the chatbot persona
-const SYSTEM_INSTRUCTION: string = `
-You are Ojas AI — a friendly and supportive chatbot specializing in Ayurveda. 
-Answer only Ayurveda-related queries (natural remedies, herbs, doshas, wellness guidance). 
-If the user asks a question unrelated to Ayurveda, politely steer the conversation back.
-Keep responses warm, encouraging, and easy to understand.
-`;
-
-/**
- * Helper function to call the Gemini API with exponential backoff, sending the full conversation history.
- * @param conversation The full conversation history, including the latest user message.
- */
+// --- Helper function to call Gemini API ---
 const callGeminiApi = async (conversation: Message[]): Promise<string> => {
   const maxRetries = 5;
-  const baseDelay = 1000; // 1 second
+  const baseDelay = 1000;
 
-  // Map internal Message structure to API Content structure
   const contents: ApiContent[] = conversation.map((msg) => ({
-    role: msg.role === "bot" ? "model" : "user", // Map 'bot' to the API's expected 'model' role
+    role: msg.role === "bot" ? "model" : "user",
     parts: [{ text: msg.text }],
   }));
 
   const payload = {
-    contents: contents, // Use the full conversation history
+    contents,
     systemInstruction: { parts: [{ text: SYSTEM_INSTRUCTION }] },
   };
 
   let lastError: unknown = null;
 
   for (let i = 0; i < maxRetries; i++) {
-    const delay = baseDelay * Math.pow(2, i);
+    const delay = baseDelay * 2 ** i;
     try {
       const response = await fetch(apiUrl, {
         method: "POST",
@@ -112,37 +98,27 @@ const callGeminiApi = async (conversation: Message[]): Promise<string> => {
       });
 
       if (!response.ok) {
-        console.error(
-          `Attempt ${i + 1}: API returned status ${response.status}`
-        );
         throw new Error(`API returned status ${response.status}`);
       }
 
       const result = await response.json();
       const text = result.candidates?.[0]?.content?.parts?.[0]?.text;
 
-      if (text) {
-        return text;
-      } else {
-        console.error(
-          `Attempt ${i + 1}: Received empty text response from model.`
-        );
-        throw new Error("Received empty text response from model.");
-      }
+      if (text) return text;
+      throw new Error("Received empty text response from model.");
     } catch (error) {
       lastError = error;
       if (i < maxRetries - 1) {
-        // Wait before the next retry
         await new Promise((resolve) => setTimeout(resolve, delay));
       }
     }
   }
-  // If all retries fail, throw the last error
+
   throw lastError;
 };
 
+// --- Main ChatBot Component ---
 const App: React.FC = () => {
-  // Add explicit types to useState calls
   const [open, setOpen] = useState<boolean>(false);
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -153,18 +129,12 @@ const App: React.FC = () => {
   const [input, setInput] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
 
-  // Fix 2: Explicitly type the ref to an HTMLDivElement
   const chatRef = useRef<HTMLDivElement | null>(null);
 
-  // Function to automatically scroll to the latest message
   const scrollToBottom = useCallback(() => {
-    // Fix 2: 'chatRef.current' is checked for null before access
     if (chatRef.current) {
-      // Use setTimeout to ensure scrolling happens after the DOM update
       setTimeout(() => {
-        (chatRef.current as HTMLDivElement).scrollTop = (
-          chatRef.current as HTMLDivElement
-        ).scrollHeight;
+        chatRef.current!.scrollTop = chatRef.current!.scrollHeight;
       }, 50);
     }
   }, []);
@@ -177,7 +147,6 @@ const App: React.FC = () => {
     const userMessageText = input.trim();
     if (!userMessageText) return;
 
-    // 1. Add user message and clear input
     const newUserMessage: Message = { role: "user", text: userMessageText };
     const messagesWithUser: Message[] = [...messages, newUserMessage];
     setMessages(messagesWithUser);
@@ -185,17 +154,13 @@ const App: React.FC = () => {
     setLoading(true);
 
     try {
-      // 2. Call the refactored API function, passing the full messagesWithUser history
       const reply = await callGeminiApi(messagesWithUser);
-
-      // 3. Add bot reply
       setMessages((prevMessages) => [
         ...prevMessages,
         { role: "bot", text: reply },
       ]);
     } catch (err) {
       console.error("Gemini error:", err);
-      // 4. Add error message
       setMessages((prevMessages) => [
         ...prevMessages,
         {
@@ -208,9 +173,7 @@ const App: React.FC = () => {
     }
   };
 
-  // Keyboard handler for Enter key
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    // Add type for keyboard event
     if (e.key === "Enter" && !loading) {
       sendMessage();
     }
