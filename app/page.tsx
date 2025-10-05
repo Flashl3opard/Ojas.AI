@@ -1,3 +1,4 @@
+"use client";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Homepage/Hero";
 import HowItWorks from "./components/Homepage/HowItWorks";
@@ -6,10 +7,14 @@ import Features from "./components/Homepage/Features";
 import Conditions from "./components/Homepage/Conditions";
 import Footer from "./components/Footer";
 
+// ✅ Import your ChatBot component
+import ChatBot from "./components/ChatBot";
+
 export default function Home() {
   return (
     <>
-      <main className="min-h-screen bg-white">
+      <main className="min-h-screen bg-white relative">
+        {/* Main Sections */}
         <Navbar />
         <Hero />
         <Features />
@@ -17,6 +22,8 @@ export default function Home() {
         <Conditions />
         <HowItWorks />
         <Footer />
+
+        <ChatBot />
       </main>
     </>
   );
