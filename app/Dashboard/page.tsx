@@ -291,7 +291,18 @@ export default function DoctorDashboard() {
                         </span>
                       </td>
                       <td className="p-3 flex gap-2 justify-center">
-                        <button className="px-3 py-1 text-xs border border-gray-200 rounded-md hover:bg-gray-50 text-gray-600 transition-colors">
+                        <button
+                          onClick={() => {
+                            if (p.id === "p1") {
+                              router.push("/patient-details");
+                            } else {
+                              alert(
+                                "This is a demo. Details are only available for Ansh Bire."
+                              );
+                            }
+                          }}
+                          className="px-3 py-1 text-xs border border-gray-200 rounded-md hover:bg-gray-50 text-gray-600 transition-colors"
+                        >
                           View
                         </button>
                         <button className="px-3 py-1 text-xs border border-gray-200 rounded-md hover:bg-gray-50 text-gray-600 transition-colors">
