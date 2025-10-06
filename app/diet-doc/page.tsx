@@ -2,317 +2,18 @@
 
 import React, { useState, useEffect } from "react";
 import { X, Printer } from "lucide-react";
-
-// -------------------- Types --------------------
-type FoodItem = {
-  id: string;
-  name: string;
-  calories: number;
-  ayurvedicProperties: string;
-};
-
-type Meal = {
-  time: string;
-  name: string;
-  foodItems: FoodItem[];
-};
-
-type DayPlan = {
-  day: string;
-  meals: Meal[];
-};
-
-type PatientDetails = {
-  name: string;
-  age: number;
-  weight: number;
-  dosha: string;
-  waterIntake: string;
-  summary: string;
-};
-
-type DoshaType = "Vata" | "Pitta"; // Add other doshas if needed
-type MealNameType = "Breakfast" | "Lunch" | "Dinner";
-
-// -------------------- Constants --------------------
-const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-const mealsOfDay = [
-  { name: "Breakfast", time: "7:00 AM" },
-  { name: "Lunch", time: "1:00 PM" },
-  { name: "Dinner", time: "8:00 PM" },
-];
-
-// -------------------- Mock DB --------------------
-const doshaFoods: Record<DoshaType, Record<MealNameType, FoodItem[]>> = {
-  Vata: {
-    Breakfast: [
-      {
-        id: "v1",
-        name: "Warm Oats",
-        calories: 280,
-        ayurvedicProperties: "Vata-Pacifying",
-      },
-      {
-        id: "v2",
-        name: "Dates",
-        calories: 60,
-        ayurvedicProperties: "Vata-Pacifying",
-      },
-      {
-        id: "v3",
-        name: "Moong Dal Khichdi",
-        calories: 250,
-        ayurvedicProperties: "Vata-Pacifying",
-      },
-      {
-        id: "v4",
-        name: "Ghee with Roti",
-        calories: 200,
-        ayurvedicProperties: "Vata-Pacifying",
-      },
-      {
-        id: "v5",
-        name: "Almond Milk",
-        calories: 100,
-        ayurvedicProperties: "Vata-Pacifying",
-      },
-      {
-        id: "v6",
-        name: "Rice Porridge",
-        calories: 220,
-        ayurvedicProperties: "Vata-Pacifying",
-      },
-      {
-        id: "v7",
-        name: "Banana",
-        calories: 90,
-        ayurvedicProperties: "Vata-Pacifying",
-      },
-    ],
-    Lunch: [
-      {
-        id: "v8",
-        name: "Vegetable Khichdi",
-        calories: 350,
-        ayurvedicProperties: "Vata-Pacifying",
-      },
-      {
-        id: "v9",
-        name: "Rice",
-        calories: 130,
-        ayurvedicProperties: "Vata-Pacifying",
-      },
-      {
-        id: "v10",
-        name: "Steamed Greens",
-        calories: 80,
-        ayurvedicProperties: "Vata-Pacifying",
-      },
-      {
-        id: "v11",
-        name: "Paneer Curry",
-        calories: 250,
-        ayurvedicProperties: "Vata-Pacifying",
-      },
-      {
-        id: "v12",
-        name: "Pumpkin Sabji",
-        calories: 150,
-        ayurvedicProperties: "Vata-Pacifying",
-      },
-      {
-        id: "v13",
-        name: "Cumin Rice",
-        calories: 180,
-        ayurvedicProperties: "Vata-Pacifying",
-      },
-      {
-        id: "v14",
-        name: "Lentil Dal",
-        calories: 200,
-        ayurvedicProperties: "Vata-Pacifying",
-      },
-    ],
-    Dinner: [
-      {
-        id: "v15",
-        name: "Vegetable Soup",
-        calories: 200,
-        ayurvedicProperties: "Vata-Pacifying",
-      },
-      {
-        id: "v16",
-        name: "Sweet Potato",
-        calories: 150,
-        ayurvedicProperties: "Vata-Pacifying",
-      },
-      {
-        id: "v17",
-        name: "Ghee Rice",
-        calories: 180,
-        ayurvedicProperties: "Vata-Pacifying",
-      },
-      {
-        id: "v18",
-        name: "Carrot Soup",
-        calories: 120,
-        ayurvedicProperties: "Vata-Pacifying",
-      },
-      {
-        id: "v19",
-        name: "Spinach Curry",
-        calories: 160,
-        ayurvedicProperties: "Vata-Pacifying",
-      },
-      {
-        id: "v20",
-        name: "Daliya",
-        calories: 140,
-        ayurvedicProperties: "Vata-Pacifying",
-      },
-      {
-        id: "v21",
-        name: "Beetroot Curry",
-        calories: 170,
-        ayurvedicProperties: "Vata-Pacifying",
-      },
-    ],
-  },
-  Pitta: {
-    Breakfast: [
-      {
-        id: "p1",
-        name: "Sweet Potatoes",
-        calories: 180,
-        ayurvedicProperties: "Pitta-Pacifying",
-      },
-      {
-        id: "p2",
-        name: "Coconut Water",
-        calories: 45,
-        ayurvedicProperties: "Pitta-Pacifying",
-      },
-      {
-        id: "p3",
-        name: "Dates",
-        calories: 60,
-        ayurvedicProperties: "Pitta-Pacifying",
-      },
-      {
-        id: "p4",
-        name: "Fruit Salad",
-        calories: 200,
-        ayurvedicProperties: "Pitta-Pacifying",
-      },
-      {
-        id: "p5",
-        name: "Rice Porridge",
-        calories: 220,
-        ayurvedicProperties: "Pitta-Pacifying",
-      },
-      {
-        id: "p6",
-        name: "Cucumber Juice",
-        calories: 40,
-        ayurvedicProperties: "Pitta-Pacifying",
-      },
-      {
-        id: "p7",
-        name: "Melon",
-        calories: 70,
-        ayurvedicProperties: "Pitta-Pacifying",
-      },
-    ],
-    Lunch: [
-      {
-        id: "p8",
-        name: "Leafy Veggies",
-        calories: 50,
-        ayurvedicProperties: "Pitta-Pacifying",
-      },
-      {
-        id: "p9",
-        name: "Rice",
-        calories: 130,
-        ayurvedicProperties: "Pitta-Pacifying",
-      },
-      {
-        id: "p10",
-        name: "Curd",
-        calories: 100,
-        ayurvedicProperties: "Pitta-Pacifying",
-      },
-      {
-        id: "p11",
-        name: "Quinoa Bowl",
-        calories: 250,
-        ayurvedicProperties: "Pitta-Pacifying",
-      },
-      {
-        id: "p12",
-        name: "Bottle Gourd Curry",
-        calories: 180,
-        ayurvedicProperties: "Pitta-Pacifying",
-      },
-      {
-        id: "p13",
-        name: "Mint Rice",
-        calories: 200,
-        ayurvedicProperties: "Pitta-Pacifying",
-      },
-      {
-        id: "p14",
-        name: "Lassi",
-        calories: 90,
-        ayurvedicProperties: "Pitta-Pacifying",
-      },
-    ],
-    Dinner: [
-      {
-        id: "p15",
-        name: "Mushrooms",
-        calories: 60,
-        ayurvedicProperties: "Pitta-Pacifying",
-      },
-      {
-        id: "p16",
-        name: "Moong Dal",
-        calories: 150,
-        ayurvedicProperties: "Pitta-Pacifying",
-      },
-      {
-        id: "p17",
-        name: "Peas",
-        calories: 75,
-        ayurvedicProperties: "Pitta-Pacifying",
-      },
-      {
-        id: "p18",
-        name: "Lauki Curry",
-        calories: 120,
-        ayurvedicProperties: "Pitta-Pacifying",
-      },
-      {
-        id: "p19",
-        name: "Pumpkin Soup",
-        calories: 130,
-        ayurvedicProperties: "Pitta-Pacifying",
-      },
-      {
-        id: "p20",
-        name: "Steamed Beans",
-        calories: 100,
-        ayurvedicProperties: "Pitta-Pacifying",
-      },
-      {
-        id: "p21",
-        name: "Apple Smoothie",
-        calories: 140,
-        ayurvedicProperties: "Pitta-Pacifying",
-      },
-    ],
-  },
-};
+import {
+  FoodItem,
+  DayPlan,
+  DoshaType,
+  MealNameType,
+  daysOfWeek,
+  mealsOfDay,
+  doshaFoods,
+  patient,
+  doctorName,
+  autoCreatePlan,
+} from "../data/Food";
 
 // -------------------- Main App --------------------
 export default function App() {
@@ -322,21 +23,10 @@ export default function App() {
   const [selectedMealIndex, setSelectedMealIndex] = useState<number | null>(
     null
   );
+  const [message, setMessage] = useState<string>("");
 
-  const patient: PatientDetails = {
-    name: "Yash Sheorey",
-    age: 22,
-    weight: 78,
-    dosha: "Vata",
-    waterIntake: "Low",
-    summary: "10/19/2023: Detox Cleanse\n10/20/2023: Digestive Boost",
-  };
-
-  const doctorName =
-    "Dr. Armaan Gupta (Gold medalist, PHD(BMMS), Ayurveda Specialist)";
-
+  // Initialize the diet plan
   useEffect(() => {
-    // Initialize the diet plan with empty meals for each day
     const initialPlan: DayPlan[] = daysOfWeek.map((day) => ({
       day,
       meals: mealsOfDay.map((meal) => ({
@@ -353,6 +43,7 @@ export default function App() {
     updatedPlan[currentDayIndex].meals[mealIndex].foodItems.push(foodItem);
     setDietPlan(updatedPlan);
     setSelectedMealIndex(null);
+    setMessage("");
   };
 
   const handleRemoveFood = (mealIndex: number, foodId: string) => {
@@ -361,143 +52,252 @@ export default function App() {
       currentDayIndex
     ].meals[mealIndex].foodItems.filter((f) => f.id !== foodId);
     setDietPlan(updatedPlan);
+    setMessage("");
   };
 
-  // -------------------- Creator --------------------
+  const handleAutoCreate = () => {
+    const newPlan = autoCreatePlan(patient.dosha as DoshaType);
+    setDietPlan(newPlan);
+    setMessage(
+      `✨ A 7-day diet plan has been auto-generated for ${patient.dosha} dosha!`
+    );
+    setCurrentDayIndex(0);
+  };
+
+  const getMacroColor = (level: string) => {
+    switch (level) {
+      case "High":
+        return "text-red-600 font-semibold";
+      case "Medium":
+        return "text-amber-600 font-medium";
+      case "Low":
+        return "text-green-700 font-medium";
+      default:
+        return "text-gray-500";
+    }
+  };
+
+  // -------------------- CREATOR VIEW --------------------
   if (view === "creator") {
     return (
-      <div className="flex bg-gray-50 min-h-screen text-slate-800 antialiased p-6 md:p-10">
-        <div className="max-w-7xl mx-auto w-full">
-          <header className="flex justify-between items-center mb-8">
-            <h1 className="text-3xl font-bold text-slate-900">
-              Create Diet Plan
+      <div className="min-h-screen bg-gradient-to-br from-[#f9faf9] to-[#f3f7f3] text-gray-800 p-8">
+        <div className="max-w-7xl mx-auto">
+          {/* Header */}
+          <header className="flex flex-col md:flex-row justify-between items-center mb-10">
+            <h1 className="text-4xl font-bold text-green-700">
+              Ayurvedic Diet Planner
             </h1>
-            <button
-              onClick={() => setView("viewer")}
-              className="bg-green-600 text-white px-6 py-3 rounded-xl shadow-lg hover:bg-green-700 transition"
-            >
-              View Final Plan
-            </button>
+            <div className="flex gap-3 mt-4 md:mt-0">
+              <button
+                onClick={handleAutoCreate}
+                className="bg-gradient-to-r from-green-500 to-green-600 text-white px-6 py-3 rounded-xl shadow-lg hover:scale-105 transition font-semibold"
+              >
+                Auto-Create for {patient.dosha}
+              </button>
+              <button
+                onClick={() => setView("viewer")}
+                className="bg-gradient-to-r from-amber-500 to-orange-500 text-white px-6 py-3 rounded-xl shadow-lg hover:scale-105 transition font-semibold"
+              >
+                View Final Plan
+              </button>
+            </div>
           </header>
 
-          <section className="bg-white p-6 rounded-3xl shadow-lg border border-gray-100">
-            <h2 className="text-xl font-semibold text-gray-700 mb-4">
-              Patient: {patient.name} ({patient.dosha})
-            </h2>
-            <div className="flex gap-2 mb-6 overflow-x-auto pb-2">
-              {daysOfWeek.map((day, idx) => (
-                <button
-                  key={day}
-                  onClick={() => setCurrentDayIndex(idx)}
-                  className={`px-4 py-2 rounded-full font-medium transition flex-shrink-0 ${
-                    currentDayIndex === idx
-                      ? "bg-green-600 text-white"
-                      : "text-gray-600 hover:bg-gray-100"
-                  }`}
-                >
-                  {day}
-                </button>
-              ))}
+          {message && (
+            <div className="text-center mb-6 text-green-700 bg-green-100 border border-green-300 py-3 rounded-xl shadow-sm font-medium">
+              {message}
             </div>
+          )}
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {dietPlan[currentDayIndex]?.meals.map((meal, mealIndex) => (
-                <div
-                  key={mealIndex}
-                  className="bg-gray-50 p-6 rounded-xl shadow-inner border"
-                >
-                  <div className="flex justify-between mb-4">
-                    <h3 className="font-bold text-lg text-green-700">
-                      {meal.name}
-                    </h3>
-                    <span className="text-sm text-gray-500">{meal.time}</span>
-                  </div>
+          {/* Patient Info */}
+          <section className="bg-white/70 backdrop-blur-md p-6 rounded-2xl shadow-md mb-6">
+            <h2 className="text-xl font-semibold text-gray-700 mb-2">
+              Patient:{" "}
+              <span className="text-green-700 font-medium">{patient.name}</span>{" "}
+              ({patient.dosha})
+            </h2>
+            <p className="text-sm text-gray-600 italic">
+              Personalized Ayurvedic plan designed for optimal balance and
+              well-being.
+            </p>
+          </section>
 
-                  <ul className="space-y-2 mb-3">
-                    {meal.foodItems.length > 0 ? (
-                      meal.foodItems.map((food) => (
-                        <li
-                          key={food.id}
-                          className="flex justify-between items-center bg-white p-2 rounded-md border"
-                        >
-                          <span>{food.name}</span>
+          {/* Day Selector */}
+          <div className="flex gap-3 overflow-x-auto mb-8 pb-2">
+            {daysOfWeek.map((day, idx) => (
+              <button
+                key={day}
+                onClick={() => setCurrentDayIndex(idx)}
+                className={`px-5 py-2.5 rounded-full font-medium whitespace-nowrap transition-all shadow-sm ${
+                  currentDayIndex === idx
+                    ? "bg-green-700 text-white scale-105"
+                    : "bg-white text-gray-600 hover:bg-green-100 border"
+                }`}
+              >
+                {day}
+              </button>
+            ))}
+          </div>
+
+          {/* Meal Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {dietPlan[currentDayIndex]?.meals.map((meal, mealIndex) => (
+              <div
+                key={mealIndex}
+                className="bg-white/80 backdrop-blur-md border border-green-100 rounded-2xl shadow-md hover:shadow-lg transition-all p-6"
+              >
+                <div className="flex justify-between items-center mb-4">
+                  <h3 className="font-bold text-lg text-green-700">
+                    {meal.name}
+                  </h3>
+                  <span className="text-sm text-gray-500">{meal.time}</span>
+                </div>
+
+                {/* Food Items */}
+                <ul className="space-y-3 mb-4 max-h-[160px] overflow-y-auto pr-1">
+                  {meal.foodItems.length > 0 ? (
+                    meal.foodItems.map((food) => (
+                      <li
+                        key={food.id}
+                        className="flex flex-col bg-green-50/60 p-2.5 rounded-lg border border-green-100"
+                      >
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm font-medium">
+                            {food.name}
+                          </span>
                           <button
                             onClick={() => handleRemoveFood(mealIndex, food.id)}
                             className="text-red-500 hover:text-red-700"
                           >
-                            <X size={14} />
+                            <X size={15} />
                           </button>
-                        </li>
-                      ))
-                    ) : (
-                      <p className="text-sm text-gray-400 italic">
-                        No food items
-                      </p>
-                    )}
-                  </ul>
-
-                  <button
-                    onClick={() =>
-                      setSelectedMealIndex(
-                        selectedMealIndex === mealIndex ? null : mealIndex
-                      )
-                    }
-                    className="w-full border border-green-600 text-green-600 rounded-md py-2 text-sm hover:bg-green-50"
-                  >
-                    Add Food
-                  </button>
-
-                  {selectedMealIndex === mealIndex && (
-                    <div className="mt-2 max-h-40 overflow-y-auto border rounded-md bg-white shadow-inner">
-                      {doshaFoods[patient.dosha as DoshaType][
-                        meal.name as MealNameType
-                      ].map((food) => (
-                        <button
-                          key={food.id}
-                          onClick={() => handleAddFood(mealIndex, food)}
-                          className="w-full text-left px-2 py-1 hover:bg-gray-100 text-sm"
-                        >
-                          {food.name}
-                        </button>
-                      ))}
-                    </div>
+                        </div>
+                        <div className="text-xs text-gray-500 mt-1 flex gap-x-3 flex-wrap">
+                          <span>
+                            P:{" "}
+                            <span
+                              className={getMacroColor(
+                                food.macronutrients.protein
+                              )}
+                            >
+                              {food.macronutrients.protein[0]}
+                            </span>
+                          </span>
+                          <span>
+                            C:{" "}
+                            <span
+                              className={getMacroColor(
+                                food.macronutrients.carbs
+                              )}
+                            >
+                              {food.macronutrients.carbs[0]}
+                            </span>
+                          </span>
+                          <span>
+                            F:{" "}
+                            <span
+                              className={getMacroColor(
+                                food.macronutrients.fats
+                              )}
+                            >
+                              {food.macronutrients.fats[0]}
+                            </span>
+                          </span>
+                          <span>
+                            Fi:{" "}
+                            <span
+                              className={getMacroColor(
+                                food.macronutrients.fiber
+                              )}
+                            >
+                              {food.macronutrients.fiber[0]}
+                            </span>
+                          </span>
+                        </div>
+                      </li>
+                    ))
+                  ) : (
+                    <p className="text-sm text-gray-400 italic text-center py-3">
+                      No food added yet
+                    </p>
                   )}
-                </div>
-              ))}
-            </div>
-          </section>
+                </ul>
+
+                {/* Add Food */}
+                <button
+                  onClick={() =>
+                    setSelectedMealIndex(
+                      selectedMealIndex === mealIndex ? null : mealIndex
+                    )
+                  }
+                  className="w-full border border-green-700 text-green-700 rounded-lg py-2 text-sm font-medium hover:bg-green-50 transition"
+                >
+                  {selectedMealIndex === mealIndex
+                    ? "Close Food Picker"
+                    : "Add Food"}
+                </button>
+
+                {/* Food Picker */}
+                {selectedMealIndex === mealIndex && (
+                  <div className="mt-3 border rounded-lg bg-white shadow-inner max-h-40 overflow-y-auto">
+                    <div className="text-xs text-center p-2 bg-green-100 text-green-800 font-medium border-b">
+                      Dosha-Pacifying Foods
+                    </div>
+                    {doshaFoods[patient.dosha as DoshaType][
+                      meal.name as MealNameType
+                    ].map((food) => (
+                      <button
+                        key={food.id}
+                        onClick={() => handleAddFood(mealIndex, food)}
+                        className="w-full text-left px-3 py-1.5 hover:bg-green-50 text-sm transition"
+                      >
+                        {food.name}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     );
   }
 
-  // -------------------- Viewer --------------------
+  // -------------------- VIEWER VIEW --------------------
   return (
-    <div className="flex bg-gray-50 min-h-screen text-slate-800 p-6 md:p-10">
-      <div className="max-w-6xl mx-auto w-full bg-white rounded-3xl shadow-lg p-8">
+    <div className="min-h-screen bg-[#fafcf9] text-gray-800 p-8">
+      <div className="max-w-6xl mx-auto bg-white rounded-3xl shadow-xl p-8 border border-green-100">
         {/* Header */}
-        <header className="flex justify-between items-center border-b pb-4 mb-6 print:hidden">
+        <header className="flex justify-between items-center border-b pb-4 mb-6">
           <div>
-            <h1 className="text-2xl font-bold text-green-700">
-              Ayurvedic Diet Plan Report
+            <h1 className="text-3xl font-bold text-green-700">
+              Ayurvedic Diet Plan
             </h1>
             <p className="text-gray-500 text-sm">Prepared by {doctorName}</p>
           </div>
-          <button
-            onClick={() => window.print()}
-            className="bg-gray-200 text-gray-700 px-6 py-2 rounded-lg shadow hover:bg-gray-300 flex items-center gap-2"
-          >
-            <Printer size={18} />
-            Print
-          </button>
+          <div className="flex gap-3">
+            <button
+              onClick={() => setView("creator")}
+              className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg shadow flex items-center gap-2 transition"
+            >
+              <X size={18} /> Edit
+            </button>
+            <button
+              onClick={() => window.print()}
+              className="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-lg shadow flex items-center gap-2 transition"
+            >
+              <Printer size={18} /> Print
+            </button>
+          </div>
         </header>
 
         {/* Patient Info */}
-        <section className="mb-8">
-          <h2 className="text-lg font-semibold text-gray-700 mb-2">
-            Patient Information
+        <section className="mb-8 bg-green-50/60 p-5 rounded-2xl border border-green-100">
+          <h2 className="text-lg font-semibold text-green-800 mb-3">
+            Patient Details
           </h2>
-          <div className="grid grid-cols-2 gap-4 text-sm text-gray-600">
+          <div className="grid grid-cols-2 gap-4 text-sm">
             <p>
               <span className="font-medium">Name:</span> {patient.name}
             </p>
@@ -522,25 +322,25 @@ export default function App() {
 
         {/* Weekly Table */}
         <section>
-          <h2 className="text-lg font-semibold text-gray-700 mb-4">
-            Weekly Diet Timetable
+          <h2 className="text-lg font-semibold text-green-800 mb-4">
+            Weekly Diet Schedule
           </h2>
           <div className="overflow-x-auto">
-            <table className="min-w-full border border-gray-200 bg-white rounded-lg overflow-hidden shadow">
-              <thead className="bg-green-600 text-white">
+            <table className="min-w-full border border-green-200 rounded-xl overflow-hidden shadow-sm">
+              <thead className="bg-green-700 text-white">
                 <tr>
                   <th className="p-3 text-left">Day</th>
                   {mealsOfDay.map((meal) => (
                     <th key={meal.name} className="p-3 text-left">
-                      {meal.name} ({meal.time})
+                      {meal.name} <span className="text-xs">({meal.time})</span>
                     </th>
                   ))}
                 </tr>
               </thead>
-              <tbody>
+              <tbody className="divide-y divide-green-100">
                 {dietPlan.map((dayPlan, dayIdx) => (
-                  <tr key={dayIdx} className="border-t">
-                    <td className="p-3 font-semibold text-gray-700">
+                  <tr key={dayIdx} className="hover:bg-green-50">
+                    <td className="p-3 font-semibold text-green-800">
                       {dayPlan.day}
                     </td>
                     {dayPlan.meals.map((meal, mealIdx) => (
@@ -550,9 +350,9 @@ export default function App() {
                             {meal.foodItems.map((food) => (
                               <li
                                 key={food.id}
-                                className="text-sm text-gray-700"
+                                className="text-sm text-gray-700 bg-green-50/60 rounded-md p-2 border border-green-100"
                               >
-                                {food.name}{" "}
+                                <span className="font-medium">{food.name}</span>{" "}
                                 <span className="text-xs text-gray-500">
                                   ({food.calories} kcal)
                                 </span>
@@ -570,6 +370,35 @@ export default function App() {
                 ))}
               </tbody>
             </table>
+          </div>
+        </section>
+
+        {/* Final Macros Section */}
+        <section className="mt-10 bg-green-50/80 border border-green-100 rounded-2xl p-6 shadow-sm">
+          <h2 className="text-xl font-semibold text-green-800 mb-3">
+            🧮 Final Macronutrient Summary
+          </h2>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+            <div className="p-4 rounded-xl bg-white shadow border border-green-100">
+              <p className="text-gray-500 text-sm">Protein</p>
+              <p className="text-green-600 font-bold text-lg">84g</p>
+              <p className="text-green-600 text-sm font-medium">High</p>
+            </div>
+            <div className="p-4 rounded-xl bg-white shadow border border-green-100">
+              <p className="text-gray-500 text-sm">Carbs</p>
+              <p className="text-amber-600 font-bold text-lg">160g</p>
+              <p className="text-amber-600 text-sm font-medium">Medium</p>
+            </div>
+            <div className="p-4 rounded-xl bg-white shadow border border-green-100">
+              <p className="text-gray-500 text-sm">Fats</p>
+              <p className="text-amber-600 font-bold text-lg">60g</p>
+              <p className="text-amber-600 text-sm font-medium">Medium</p>
+            </div>
+            <div className="p-4 rounded-xl bg-white shadow border border-green-100">
+              <p className="text-gray-500 text-sm">Fiber</p>
+              <p className="text-red-600 font-bold text-lg">15g</p>
+              <p className="text-red-600 text-sm font-medium">Low</p>
+            </div>
           </div>
         </section>
       </div>
