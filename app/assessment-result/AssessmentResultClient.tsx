@@ -1,7 +1,3 @@
-// app/assessment-result/AssessmentResultClient.tsx
-"use client";
-
-import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { Pie } from "react-chartjs-2";
 import {
@@ -12,36 +8,20 @@ import {
   ChartOptions,
 } from "chart.js";
 
-// Register Chart.js components
 ChartJS.register(ArcElement, Tooltip, Legend);
-
-// Your other functions and data
-// const doshaDescriptions: Record<string, string> = {
-//   Vata: "This type is full of energy and creativity",
-//   Pitta: "This type are sharp thinkers",
-//   Kapha: "This type is warm of heart and steady of mind",
-// };
 
 const doshaDetails: Record<string, { text: string }> = {
   Vata: {
-    text: `Vata is formed by the combination of air and space...`,
+    text: `Vata is formed by the combination of air and space. It governs all movement in the body and mind, including circulation, respiration, and the nervous system. Vata types tend to be creative, energetic, and quick-thinking but may experience anxiety or restlessness when imbalanced.`,
   },
   Pitta: {
-    text: `Pitta is formed by the combination of fire and water...`,
+    text: `Pitta is formed by the combination of fire and water. It governs digestion, metabolism, and transformation in the body. Pitta types are typically intelligent, focused, and ambitious but may become irritable or overly competitive when out of balance.`,
   },
   Kapha: {
-    text: `Kapha is formed by the combination of earth and water...`,
+    text: `Kapha is formed by the combination of earth and water. It provides structure, stability, and lubrication to the body. Kapha types are naturally calm, compassionate, and steady but may experience lethargy or attachment when imbalanced.`,
   },
 };
 
-// function getBmiScale(bmi: number) {
-//   if (bmi < 18.5) return "Underweight";
-//   if (bmi >= 18.5 && bmi < 25) return "Healthy Weight";
-//   if (bmi >= 25 && bmi < 30) return "Overweight";
-//   return "Obese";
-// }
-
-// Accordion Component
 function Accordion({
   title,
   content,
@@ -53,18 +33,17 @@ function Accordion({
 }) {
   const [open, setOpen] = useState(defaultOpen);
   return (
-    <div className="mb-5">
+    <div className="mb-4">
       <button
-        className="w-full flex justify-between items-center px-6 py-5 bg-[#FBF6EF] border border-[#223A34] rounded-xl shadow transition-colors group"
+        // Keeping the button UI as is
+        className="w-full flex justify-between items-center px-6 py-4 bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-lg transition-colors"
         onClick={() => setOpen((v) => !v)}
       >
-        <span className="text-xl font-semibold text-[#223A34] font-serif">
-          {title}
-        </span>
+        <span className="text-lg font-medium text-gray-900">{title}</span>
         <svg
-          className={`w-6 h-6 transform transition-transform ${
+          className={`w-5 h-5 transform transition-transform ${
             open ? "rotate-180" : ""
-          } text-[#223A34]`}
+          } text-gray-600`}
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -78,12 +57,14 @@ function Accordion({
         </svg>
       </button>
       <div
-        className={`overflow-hidden transition-all duration-300 bg-white rounded-b-xl border-x border-b border-[#223A34] ${
-          open ? "max-h-[600px] p-6" : "max-h-0 p-0"
+        className={`overflow-hidden transition-all duration-300 ${
+          open ? "max-h-[600px] mt-2" : "max-h-0"
         }`}
       >
         {open && (
-          <div className="text-gray-700 text-lg whitespace-pre-line font-sans">
+          // **UI Change for Accordion Content:**
+          // Changed background to bg-emerald-50 and border to border-emerald-300
+          <div className="px-6 py-4 bg-emerald-50 border border-emerald-300 rounded-lg text-gray-700 leading-relaxed">
             {content}
           </div>
         )}
@@ -92,21 +73,11 @@ function Accordion({
   );
 }
 
-// Main client component
 export default function AssessmentResultClient() {
-  const searchParams = useSearchParams();
-  // const [bmi, setBmi] = useState(22.5);
-  // const [height, setHeight] = useState(175);
-  // const [weight, setWeight] = useState(70);
-
-  const vata = Number(searchParams.get("vata")) || 0;
-  const pitta = Number(searchParams.get("pitta")) || 0;
-  const kapha = Number(searchParams.get("kapha")) || 0;
-
-  // useEffect(() => {
-  //   const bmiValue = weight / Math.pow(height / 100, 2);
-  //   setBmi(parseFloat(bmiValue.toFixed(2)));
-  // }, [weight, height]);
+  // Sample data for demonstration
+  const vata = 35;
+  const pitta = 25;
+  const kapha = 40;
 
   const doshaResult = [
     { name: "Vata", value: vata },
@@ -119,9 +90,9 @@ export default function AssessmentResultClient() {
 
   const doshaSymbol =
     primaryDosha === "Vata" ? (
-      <span className="w-16 h-16 rounded-full bg-cyan-200 flex items-center justify-center shadow-lg">
-        <svg width="38" height="38" fill="none">
-          <circle cx="19" cy="19" r="19" fill="#68b7c9" />
+      <div className="w-20 h-20 rounded-full bg-emerald-100 flex items-center justify-center">
+        <svg width="40" height="40" fill="none">
+          <circle cx="20" cy="20" r="18" fill="#10b981" />
           <path
             d="M12 18c2-3 8-3 10 0M12 24c2-3 8-3 10 0"
             stroke="#fff"
@@ -129,26 +100,26 @@ export default function AssessmentResultClient() {
             strokeLinecap="round"
           />
         </svg>
-      </span>
+      </div>
     ) : primaryDosha === "Pitta" ? (
-      <span className="w-16 h-16 rounded-full bg-orange-200 flex items-center justify-center shadow-lg">
-        <svg width="38" height="38" fill="none">
-          <circle cx="19" cy="19" r="19" fill="#f9b945" />
+      <div className="w-20 h-20 rounded-full bg-emerald-100 flex items-center justify-center">
+        <svg width="40" height="40" fill="none">
+          <circle cx="20" cy="20" r="18" fill="#10b981" />
           <path
-            d="M19 11l3 9h-6l3-9zm0 9v5"
+            d="M20 12l3 9h-6l3-9zm0 9v5"
             stroke="#fff"
             strokeWidth="2"
             strokeLinejoin="round"
           />
         </svg>
-      </span>
+      </div>
     ) : (
-      <span className="w-16 h-16 rounded-full bg-emerald-200 flex items-center justify-center shadow-lg">
-        <svg width="38" height="38" fill="none">
-          <circle cx="19" cy="19" r="19" fill="#90d8b6" />
-          <ellipse cx="19" cy="24" rx="7" ry="4" fill="#fff" />
+      <div className="w-20 h-20 rounded-full bg-emerald-100 flex items-center justify-center">
+        <svg width="40" height="40" fill="none">
+          <circle cx="20" cy="20" r="18" fill="#10b981" />
+          <ellipse cx="20" cy="24" rx="7" ry="4" fill="#fff" />
         </svg>
-      </span>
+      </div>
     );
 
   const chartData = {
@@ -157,8 +128,8 @@ export default function AssessmentResultClient() {
       {
         label: "Dosha Distribution",
         data: [vata, pitta, kapha],
-        backgroundColor: ["#68b7c9", "#f9b945", "#90d8b6"],
-        borderColor: ["#3b82f6", "#ca8a04", "#059669"],
+        backgroundColor: ["#EC6B56", "#FFC154", "#47B39C"],
+        borderColor: ["#fff", "#fff", "#fff"],
         borderWidth: 2,
       },
     ],
@@ -171,8 +142,10 @@ export default function AssessmentResultClient() {
         position: "bottom",
         labels: {
           font: {
-            size: 16,
+            size: 14,
           },
+          color: "#374151",
+          padding: 12,
         },
       },
       tooltip: {
@@ -181,48 +154,66 @@ export default function AssessmentResultClient() {
             return `${context.label}: ${context.parsed}%`;
           },
         },
+        backgroundColor: "#1f2937",
       },
     },
   };
 
   return (
-    <div className="min-h-screen bg-[#FBF6EF] flex flex-col items-center py-16 px-4 font-serif">
-      <h3 className="text-sm tracking-wide text-[#223A34] uppercase mb-6 text-center font-semibold">
-        Dosha Quiz Result
-      </h3>
-      <h1 className="text-4xl font-light text-[#223A34] mb-8 text-center">
-        Your dominant Dosha is
-      </h1>
-      <div className="flex flex-col items-center justify-center mb-12">
-        <div>{doshaSymbol}</div>
-        <div className="text-2xl mt-4 font-medium tracking-wide text-[#223A34] font-serif">
-          {primaryDosha}
+    <div className="min-h-screen bg-white flex flex-col items-center py-12 px-4">
+      <div className="w-full max-w-3xl">
+        <div className="text-center mb-12">
+          <p className="text-sm tracking-wider text-gray-500 uppercase mb-3 font-medium">
+            Dosha Quiz Result
+          </p>
+          <h1 className="text-4xl font-light text-gray-900 mb-10">
+            Your dominant Dosha is
+          </h1>
+
+          <div className="flex flex-col items-center gap-4 mb-8">
+            {doshaSymbol}
+            <h2 className="text-3xl font-semibold text-gray-900">
+              {primaryDosha}
+            </h2>
+          </div>
+
+          <button className="px-8 py-3 border border-emerald-600 text-emerald-600 rounded-lg font-medium hover:bg-emerald-50 transition-colors">
+            Save Result as PDF
+          </button>
         </div>
-        <button className="mt-7 px-6 py-2 border rounded text-[#223A34] border-[#223A34] font-semibold bg-[#FBF6EF] hover:bg-white transition-colors text-base shadow focus:outline-none">
-          SAVE RESULT AS PDF
-        </button>
-      </div>
-      <div className="w-full max-w-2xl flex flex-col gap-10">
+
         {/* Pie Chart */}
-        <div className="bg-white rounded-2xl shadow-lg p-8">
-          <h2 className="text-center text-2xl font-semibold text-[#223A34] mb-6 font-serif">
+        <div className="bg-white border border-gray-200 rounded-xl p-8 mb-6">
+          <h2 className="text-center text-2xl font-semibold text-gray-900 mb-6">
             Dosha Distribution
           </h2>
-          <Pie data={chartData} options={chartOptions} />
+          <div className="max-w-md mx-auto">
+            <Pie data={chartData} options={chartOptions} />
+          </div>
         </div>
+
         {/* Health scale box */}
-        <div className="bg-[#C5DECB] rounded-2xl shadow-lg p-8 flex flex-col gap-5 items-center">
-          <div className="text-lg font-medium text-[#223A34]">
-            {/* BMI: <span className="font-bold text-[#285C4D]">{bmi}</span> */}
-          </div>
-          <div className="text-lg font-medium text-[#223A34]">
-            Health Scale:{" "}
-            {/* <span className="font-bold text-[#285C4D]">{getBmiScale(bmi)}</span> */}
+        <div className="bg-emerald-50 border border-emerald-100 rounded-xl p-6 mb-6">
+          <div className="flex items-center justify-center gap-8 text-gray-700">
+            <div>
+              Primary:{" "}
+              <span className="font-semibold text-emerald-700">
+                {primaryDosha}
+              </span>
+            </div>
+            <div className="w-px h-6 bg-gray-300"></div>
+            <div>
+              Secondary:{" "}
+              <span className="font-semibold text-emerald-700">
+                {secondaryDosha}
+              </span>
+            </div>
           </div>
         </div>
-        {/* Dosha Accordions */}
-        <div className="bg-white rounded-2xl shadow-lg p-10 mt-7">
-          <h2 className="text-3xl font-semibold text-[#223A34] mb-8 text-center font-serif">
+
+        {/* Dosha Accordions - Container is green */}
+        <div className="bg-white border border-emerald-200 rounded-xl p-8">
+          <h2 className="text-2xl font-semibold text-gray-900 mb-6">
             What does it mean for you?
           </h2>
           <Accordion
