@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
-
+import { TbMessageChatbot } from "react-icons/tb";
 // Define constants for the Gemini API
 const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
 const modelName = "gemini-2.5-flash-preview-05-20"; // Standard model for text generation
@@ -24,11 +24,11 @@ interface ApiContent {
 
 // System instruction for the chatbot persona
 const SYSTEM_INSTRUCTION: string = `
-You are Ojas AI — a friendly and supportive chatbot specializing in Ayurveda. 
-Answer only Ayurveda-related queries (natural remedies, herbs, doshas, wellness guidance). 
-If the user asks a question unrelated to Ayurveda, politely steer the conversation back.
-Keep responses warm, encouraging, and easy to understand.
-`;
+  You are Ojas AI — a friendly and supportive chatbot specializing in Ayurveda. 
+  Answer only Ayurveda-related queries (natural remedies, herbs, doshas, wellness guidance). 
+  If the user asks a question unrelated to Ayurveda, politely steer the conversation back.
+  Keep responses warm, encouraging, and easy to understand.
+  `;
 
 // --- Icon Components ---
 const SendIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
@@ -46,28 +46,6 @@ const SendIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
   >
     <line x1="22" y1="2" x2="11" y2="13" />
     <polygon points="22 2 15 22 11 13 2 9 22 2" />
-  </svg>
-);
-
-const RobotIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="28"
-    height="28"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    {...props}
-  >
-    <rect x="2" y="4" width="20" height="16" rx="2" ry="2" />
-    <path d="M7 10h.01" />
-    <path d="M17 10h.01" />
-    <path d="M7 14h.01" />
-    <path d="M17 14h.01" />
-    <path d="M12 18v-4" />
   </svg>
 );
 
@@ -128,7 +106,7 @@ const App: React.FC = () => {
   ]);
   const [input, setInput] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
-
+  const [hasNewMessage, setHasNewMessage] = useState<boolean>(true);
   const chatRef = useRef<HTMLDivElement | null>(null);
 
   const scrollToBottom = useCallback(() => {
@@ -138,6 +116,11 @@ const App: React.FC = () => {
       }, 50);
     }
   }, []);
+  useEffect(() => {
+    if (open) {
+      setHasNewMessage(false);
+    }
+  }, [open]);
 
   useEffect(() => {
     scrollToBottom();
@@ -159,6 +142,9 @@ const App: React.FC = () => {
         ...prevMessages,
         { role: "bot", text: reply },
       ]);
+      if (!open) {
+        setHasNewMessage(true);
+      }
     } catch (err) {
       console.error("Gemini error:", err);
       setMessages((prevMessages) => [
@@ -168,6 +154,9 @@ const App: React.FC = () => {
           text: "⚠️ Sorry, I couldn’t process that right now due to a network or API issue. Please try again.",
         },
       ]);
+      if (!open) {
+        setHasNewMessage(true);
+      }
     } finally {
       setLoading(false);
     }
@@ -180,7 +169,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center font-sans p-4">
+    <div className="min-h-screen bg-gray-50 flex items-center font-sans p-4">
       {/* Floating Bot Button */}
       <div
         className={`fixed bottom-6 right-6 z-50 bg-green-600 p-4 rounded-full shadow-xl cursor-pointer transition-transform duration-300 ${
@@ -189,12 +178,19 @@ const App: React.FC = () => {
         onClick={() => setOpen(!open)}
         title="Toggle Ojas AI Chatbot"
       >
-        <RobotIcon className="text-white text-3xl" />
+        <TbMessageChatbot className="text-white text-3xl h-7 w-7" />
+        {!open && hasNewMessage && (
+          <span className="absolute top-0 right-0 block h-4 w-4 rounded-full ring-2 ring-white bg-red-500 animate-ping-slow"></span>
+        )}
       </div>
 
       {/* Chat Window */}
       {open && (
-        <div className="fixed bottom-20 right-6 z-50 w-full max-w-sm h-[80vh] md:h-[600px] bg-white shadow-2xl rounded-2xl border-4 border-green-500/50 flex flex-col overflow-hidden transition-all duration-300 transform scale-100">
+        <div
+          className="fixed inset-0 md:inset-auto z-50 h-full w-full p-0 md:p-0 flex flex-col overflow-hidden transition-all duration-300 transform scale-100 
+       bg-white shadow-none md:shadow-2xl rounded-none md:rounded-2xl border-0 
+       md:bottom-20 md:right-6 md:max-w-sm md:h-[600px] md:w-auto"
+        >
           {/* Header */}
           <div className="bg-green-700 text-white px-4 py-3 text-lg font-bold flex items-center justify-between shadow-md">
             <span className="flex items-center">
