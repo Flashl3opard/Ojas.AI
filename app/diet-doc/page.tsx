@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+<<<<<<< HEAD
 import { X, Printer } from "lucide-react";
 import {
   FoodItem,
@@ -14,6 +15,319 @@ import {
   doctorName,
   autoCreatePlan,
 } from "../data/Food";
+=======
+import { X, Printer, ArrowLeft } from "lucide-react";
+// -------------------- Types --------------------
+type FoodItem = {
+  id: string;
+  name: string;
+  calories: number;
+  ayurvedicProperties: string;
+};
+
+type Meal = {
+  time: string;
+  name: string;
+  foodItems: FoodItem[];
+};
+
+type DayPlan = {
+  day: string;
+  meals: Meal[];
+};
+
+type PatientDetails = {
+  name: string;
+  age: number;
+  weight: number;
+  dosha: string;
+  waterIntake: string;
+  summary: string;
+};
+
+type DoshaType = "Vata" | "Pitta"; // Add other doshas if needed
+type MealNameType = "Breakfast" | "Lunch" | "Dinner";
+
+// -------------------- Constants --------------------
+const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+const mealsOfDay = [
+  { name: "Breakfast", time: "7:00 AM" },
+  { name: "Lunch", time: "1:00 PM" },
+  { name: "Dinner", time: "8:00 PM" },
+];
+
+// -------------------- Mock DB --------------------
+const doshaFoods: Record<DoshaType, Record<MealNameType, FoodItem[]>> = {
+  Vata: {
+    Breakfast: [
+      {
+        id: "v1",
+        name: "Warm Oats",
+        calories: 280,
+        ayurvedicProperties: "Vata-Pacifying",
+      },
+      {
+        id: "v2",
+        name: "Dates",
+        calories: 60,
+        ayurvedicProperties: "Vata-Pacifying",
+      },
+      {
+        id: "v3",
+        name: "Moong Dal Khichdi",
+        calories: 250,
+        ayurvedicProperties: "Vata-Pacifying",
+      },
+      {
+        id: "v4",
+        name: "Ghee with Roti",
+        calories: 200,
+        ayurvedicProperties: "Vata-Pacifying",
+      },
+      {
+        id: "v5",
+        name: "Almond Milk",
+        calories: 100,
+        ayurvedicProperties: "Vata-Pacifying",
+      },
+      {
+        id: "v6",
+        name: "Rice Porridge",
+        calories: 220,
+        ayurvedicProperties: "Vata-Pacifying",
+      },
+      {
+        id: "v7",
+        name: "Banana",
+        calories: 90,
+        ayurvedicProperties: "Vata-Pacifying",
+      },
+    ],
+    Lunch: [
+      {
+        id: "v8",
+        name: "Vegetable Khichdi",
+        calories: 350,
+        ayurvedicProperties: "Vata-Pacifying",
+      },
+      {
+        id: "v9",
+        name: "Rice",
+        calories: 130,
+        ayurvedicProperties: "Vata-Pacifying",
+      },
+      {
+        id: "v10",
+        name: "Steamed Greens",
+        calories: 80,
+        ayurvedicProperties: "Vata-Pacifying",
+      },
+      {
+        id: "v11",
+        name: "Paneer Curry",
+        calories: 250,
+        ayurvedicProperties: "Vata-Pacifying",
+      },
+      {
+        id: "v12",
+        name: "Pumpkin Sabji",
+        calories: 150,
+        ayurvedicProperties: "Vata-Pacifying",
+      },
+      {
+        id: "v13",
+        name: "Cumin Rice",
+        calories: 180,
+        ayurvedicProperties: "Vata-Pacifying",
+      },
+      {
+        id: "v14",
+        name: "Lentil Dal",
+        calories: 200,
+        ayurvedicProperties: "Vata-Pacifying",
+      },
+    ],
+    Dinner: [
+      {
+        id: "v15",
+        name: "Vegetable Soup",
+        calories: 200,
+        ayurvedicProperties: "Vata-Pacifying",
+      },
+      {
+        id: "v16",
+        name: "Sweet Potato",
+        calories: 150,
+        ayurvedicProperties: "Vata-Pacifying",
+      },
+      {
+        id: "v17",
+        name: "Ghee Rice",
+        calories: 180,
+        ayurvedicProperties: "Vata-Pacifying",
+      },
+      {
+        id: "v18",
+        name: "Carrot Soup",
+        calories: 120,
+        ayurvedicProperties: "Vata-Pacifying",
+      },
+      {
+        id: "v19",
+        name: "Spinach Curry",
+        calories: 160,
+        ayurvedicProperties: "Vata-Pacifying",
+      },
+      {
+        id: "v20",
+        name: "Daliya",
+        calories: 140,
+        ayurvedicProperties: "Vata-Pacifying",
+      },
+      {
+        id: "v21",
+        name: "Beetroot Curry",
+        calories: 170,
+        ayurvedicProperties: "Vata-Pacifying",
+      },
+    ],
+  },
+  Pitta: {
+    Breakfast: [
+      {
+        id: "p1",
+        name: "Sweet Potatoes",
+        calories: 180,
+        ayurvedicProperties: "Pitta-Pacifying",
+      },
+      {
+        id: "p2",
+        name: "Coconut Water",
+        calories: 45,
+        ayurvedicProperties: "Pitta-Pacifying",
+      },
+      {
+        id: "p3",
+        name: "Dates",
+        calories: 60,
+        ayurvedicProperties: "Pitta-Pacifying",
+      },
+      {
+        id: "p4",
+        name: "Fruit Salad",
+        calories: 200,
+        ayurvedicProperties: "Pitta-Pacifying",
+      },
+      {
+        id: "p5",
+        name: "Rice Porridge",
+        calories: 220,
+        ayurvedicProperties: "Pitta-Pacifying",
+      },
+      {
+        id: "p6",
+        name: "Cucumber Juice",
+        calories: 40,
+        ayurvedicProperties: "Pitta-Pacifying",
+      },
+      {
+        id: "p7",
+        name: "Melon",
+        calories: 70,
+        ayurvedicProperties: "Pitta-Pacifying",
+      },
+    ],
+    Lunch: [
+      {
+        id: "p8",
+        name: "Leafy Veggies",
+        calories: 50,
+        ayurvedicProperties: "Pitta-Pacifying",
+      },
+      {
+        id: "p9",
+        name: "Rice",
+        calories: 130,
+        ayurvedicProperties: "Pitta-Pacifying",
+      },
+      {
+        id: "p10",
+        name: "Curd",
+        calories: 100,
+        ayurvedicProperties: "Pitta-Pacifying",
+      },
+      {
+        id: "p11",
+        name: "Quinoa Bowl",
+        calories: 250,
+        ayurvedicProperties: "Pitta-Pacifying",
+      },
+      {
+        id: "p12",
+        name: "Bottle Gourd Curry",
+        calories: 180,
+        ayurvedicProperties: "Pitta-Pacifying",
+      },
+      {
+        id: "p13",
+        name: "Mint Rice",
+        calories: 200,
+        ayurvedicProperties: "Pitta-Pacifying",
+      },
+      {
+        id: "p14",
+        name: "Lassi",
+        calories: 90,
+        ayurvedicProperties: "Pitta-Pacifying",
+      },
+    ],
+    Dinner: [
+      {
+        id: "p15",
+        name: "Mushrooms",
+        calories: 60,
+        ayurvedicProperties: "Pitta-Pacifying",
+      },
+      {
+        id: "p16",
+        name: "Moong Dal",
+        calories: 150,
+        ayurvedicProperties: "Pitta-Pacifying",
+      },
+      {
+        id: "p17",
+        name: "Peas",
+        calories: 75,
+        ayurvedicProperties: "Pitta-Pacifying",
+      },
+      {
+        id: "p18",
+        name: "Lauki Curry",
+        calories: 120,
+        ayurvedicProperties: "Pitta-Pacifying",
+      },
+      {
+        id: "p19",
+        name: "Pumpkin Soup",
+        calories: 130,
+        ayurvedicProperties: "Pitta-Pacifying",
+      },
+      {
+        id: "p20",
+        name: "Steamed Beans",
+        calories: 100,
+        ayurvedicProperties: "Pitta-Pacifying",
+      },
+      {
+        id: "p21",
+        name: "Apple Smoothie",
+        calories: 140,
+        ayurvedicProperties: "Pitta-Pacifying",
+      },
+    ],
+  },
+};
+>>>>>>> 62bb144b129fe534a9872b24a759a6d0afa0398a
 
 // -------------------- Main App --------------------
 export default function App() {
@@ -80,6 +394,7 @@ export default function App() {
   // -------------------- CREATOR VIEW --------------------
   if (view === "creator") {
     return (
+<<<<<<< HEAD
       <div className="min-h-screen bg-gradient-to-br from-[#f9faf9] to-[#f3f7f3] text-gray-800 p-8">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
@@ -106,6 +421,46 @@ export default function App() {
           {message && (
             <div className="text-center mb-6 text-green-700 bg-green-100 border border-green-300 py-3 rounded-xl shadow-sm font-medium">
               {message}
+=======
+      <div className="flex bg-gray-50 min-h-screen text-slate-800 antialiased p-6 md:p-10">
+        <div className="max-w-7xl mx-auto w-full">
+          <header className="flex justify-between items-center mb-8">
+            <button
+              onClick={() => window.history.back()}
+              className="flex items-center gap-1 text-green-700 hover:text-green-900 font-medium flex-shrink-0"
+            >
+              <ArrowLeft size={20} />
+              <span className="inline">Back</span>
+            </button>
+            <h1 className="text-3xl font-bold text-slate-900 flex-1 text-center">
+              Create Diet Plan
+            </h1>
+            <button
+              onClick={() => setView("viewer")} // This button takes you TO the viewer
+              className="bg-green-600 text-white px-6 py-3 rounded-xl shadow-lg hover:bg-green-700 transition flex-shrink-0"
+            >
+              View Final Plan
+            </button>
+          </header>
+          <section className="bg-white p-6 rounded-3xl shadow-lg border border-gray-100">
+            <h2 className="text-xl font-semibold text-gray-700 mb-4">
+              Patient: {patient.name} ({patient.dosha})
+            </h2>
+            <div className="flex gap-2 mb-6 overflow-x-auto pb-2">
+              {daysOfWeek.map((day, idx) => (
+                <button
+                  key={day}
+                  onClick={() => setCurrentDayIndex(idx)}
+                  className={`px-4 py-2 rounded-full font-medium transition flex-shrink-0 ${
+                    currentDayIndex === idx
+                      ? "bg-green-600 text-white"
+                      : "text-gray-600 hover:bg-gray-100"
+                  }`}
+                >
+                  {day}
+                </button>
+              ))}
+>>>>>>> 62bb144b129fe534a9872b24a759a6d0afa0398a
             </div>
           )}
 
@@ -266,6 +621,7 @@ export default function App() {
 
   // -------------------- VIEWER VIEW --------------------
   return (
+<<<<<<< HEAD
     <div className="min-h-screen bg-[#fafcf9] text-gray-800 p-8">
       <div className="max-w-6xl mx-auto bg-white rounded-3xl shadow-xl p-8 border border-green-100">
         {/* Header */}
@@ -273,9 +629,30 @@ export default function App() {
           <div>
             <h1 className="text-3xl font-bold text-green-700">
               Ayurvedic Diet Plan
+=======
+    <div className="flex bg-gray-50 min-h-screen text-slate-800 p-6 md:p-10">
+      <div className="max-w-6xl mx-auto w-full bg-white rounded-3xl shadow-lg p-8">
+        <header className="flex justify-between items-center border-b pb-4 mb-6 print:hidden">
+          {/* Back button on far left */}
+          <button
+            onClick={() => setView("creator")}
+            className="flex items-center gap-1 text-green-700 hover:text-green-900 font-medium flex-shrink-0"
+          >
+            <ArrowLeft size={20} />
+            <span className="inline">Back</span>
+          </button>
+
+          {/* Title centered */}
+          <div className="flex-1 text-center mx-2 min-w-0">
+            <h1 className="text-base sm:text-xl md:text-2xl font-bold text-green-700 truncate">
+              Ayurvedic Diet Plan Report
+>>>>>>> 62bb144b129fe534a9872b24a759a6d0afa0398a
             </h1>
-            <p className="text-gray-500 text-sm">Prepared by {doctorName}</p>
+            <p className="text-xs text-gray-500 truncate">
+              Prepared by {doctorName}
+            </p>
           </div>
+<<<<<<< HEAD
           <div className="flex gap-3">
             <button
               onClick={() => setView("creator")}
@@ -290,6 +667,18 @@ export default function App() {
               <Printer size={18} /> Print
             </button>
           </div>
+=======
+
+          {/* Print button on far right */}
+          <button
+            onClick={() => window.print()}
+            className="bg-gray-200 text-gray-700 px-3 py-2 rounded-lg shadow hover:bg-gray-300 flex items-center gap-1 text-sm flex-shrink-0"
+          >
+            <Printer size={18} />
+            {/* Always show "Print" text */}
+            <span className="inline">Print</span>
+          </button>
+>>>>>>> 62bb144b129fe534a9872b24a759a6d0afa0398a
         </header>
 
         {/* Patient Info */}
