@@ -1,8 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { X, Printer } from "lucide-react";
-
+import { X, Printer, ArrowLeft } from "lucide-react";
 // -------------------- Types --------------------
 type FoodItem = {
   id: string;
@@ -369,17 +368,23 @@ export default function App() {
       <div className="flex bg-gray-50 min-h-screen text-slate-800 antialiased p-6 md:p-10">
         <div className="max-w-7xl mx-auto w-full">
           <header className="flex justify-between items-center mb-8">
-            <h1 className="text-3xl font-bold text-slate-900">
+            <button
+              onClick={() => window.history.back()}
+              className="flex items-center gap-1 text-green-700 hover:text-green-900 font-medium flex-shrink-0"
+            >
+              <ArrowLeft size={20} />
+              <span className="inline">Back</span>
+            </button>
+            <h1 className="text-3xl font-bold text-slate-900 flex-1 text-center">
               Create Diet Plan
             </h1>
             <button
-              onClick={() => setView("viewer")}
-              className="bg-green-600 text-white px-6 py-3 rounded-xl shadow-lg hover:bg-green-700 transition"
+              onClick={() => setView("viewer")} // This button takes you TO the viewer
+              className="bg-green-600 text-white px-6 py-3 rounded-xl shadow-lg hover:bg-green-700 transition flex-shrink-0"
             >
               View Final Plan
             </button>
           </header>
-
           <section className="bg-white p-6 rounded-3xl shadow-lg border border-gray-100">
             <h2 className="text-xl font-semibold text-gray-700 mb-4">
               Patient: {patient.name} ({patient.dosha})
@@ -475,20 +480,34 @@ export default function App() {
   return (
     <div className="flex bg-gray-50 min-h-screen text-slate-800 p-6 md:p-10">
       <div className="max-w-6xl mx-auto w-full bg-white rounded-3xl shadow-lg p-8">
-        {/* Header */}
         <header className="flex justify-between items-center border-b pb-4 mb-6 print:hidden">
-          <div>
-            <h1 className="text-2xl font-bold text-green-700">
+          {/* Back button on far left */}
+          <button
+            onClick={() => setView("creator")}
+            className="flex items-center gap-1 text-green-700 hover:text-green-900 font-medium flex-shrink-0"
+          >
+            <ArrowLeft size={20} />
+            <span className="inline">Back</span>
+          </button>
+
+          {/* Title centered */}
+          <div className="flex-1 text-center mx-2 min-w-0">
+            <h1 className="text-base sm:text-xl md:text-2xl font-bold text-green-700 truncate">
               Ayurvedic Diet Plan Report
             </h1>
-            <p className="text-gray-500 text-sm">Prepared by {doctorName}</p>
+            <p className="text-xs text-gray-500 truncate">
+              Prepared by {doctorName}
+            </p>
           </div>
+
+          {/* Print button on far right */}
           <button
             onClick={() => window.print()}
-            className="bg-gray-200 text-gray-700 px-6 py-2 rounded-lg shadow hover:bg-gray-300 flex items-center gap-2"
+            className="bg-gray-200 text-gray-700 px-3 py-2 rounded-lg shadow hover:bg-gray-300 flex items-center gap-1 text-sm flex-shrink-0"
           >
             <Printer size={18} />
-            Print
+            {/* Always show "Print" text */}
+            <span className="inline">Print</span>
           </button>
         </header>
 

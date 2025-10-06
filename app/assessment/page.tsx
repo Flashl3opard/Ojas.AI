@@ -1,11 +1,10 @@
-// app/assessment/page.tsx
 "use client";
 
 import React from "react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Navbar from "../components/Navbar";
-import { motion } from "framer-motion"; // ✅ Import motion
+// Removed: import { motion } from "framer-motion";
 
 const quizQuestions = [
   {
@@ -134,60 +133,39 @@ export default function AssessmentPage() {
   return (
     <>
       <Navbar />
-      <motion.div
+      <div
         className="min-h-screen bg-neutral-100 flex flex-col items-center py-12 px-4 font-sans"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8 }}
+        // Removed framer-motion props: initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8 }}
       >
-        <motion.div
+        <div
           className="w-full max-w-6xl bg-white shadow-2xl rounded-3xl p-8 border border-neutral-200"
-          initial={{ y: 30, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.8 }}
+          // Removed framer-motion props: initial={{ y: 30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.8 }}
         >
           <div className="text-center mb-8">
-            <motion.h1
+            <h1
               className="text-4xl font-extrabold text-gray-800"
-              initial={{ y: -20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.6 }}
+              // Removed framer-motion props: initial={{ y: -20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.6 }}
             >
               Dosha Assessment Quiz
-            </motion.h1>
-            <motion.p
+            </h1>
+            <p
               className="text-gray-500 mt-2"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.4, duration: 0.6 }}
+              // Removed framer-motion props: initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4, duration: 0.6 }}
             >
               Answer the questions below to discover your unique mind-body
               constitution (Prakriti).
-            </motion.p>
+            </p>
           </div>
 
-          <motion.div
+          <div
             className="grid md:grid-cols-2 gap-6"
-            initial="hidden"
-            animate="visible"
-            variants={{
-              hidden: {},
-              visible: {
-                transition: {
-                  staggerChildren: 0.1,
-                },
-              },
-            }}
+            // Removed framer-motion props: initial="hidden" animate="visible" variants
           >
             {quizQuestions.map((q) => (
-              <motion.div
+              <div
                 key={q.id}
                 className="border border-neutral-200 rounded-2xl p-6 bg-white shadow-sm transition-all duration-300 hover:shadow-md"
-                variants={{
-                  hidden: { opacity: 0, y: 30 },
-                  visible: { opacity: 1, y: 0 },
-                }}
-                transition={{ duration: 0.5 }}
+                // Removed framer-motion props: variants transition
               >
                 <h3 className="font-semibold text-lg mb-4 text-gray-800">
                   {q.label}
@@ -227,23 +205,21 @@ export default function AssessmentPage() {
                     </label>
                   ))}
                 </div>
-              </motion.div>
+              </div>
             ))}
-          </motion.div>
+          </div>
 
           <div className="flex justify-center mt-10">
-            <motion.button
+            <button
               onClick={calculateDosha}
-              className="bg-green-600 text-white font-bold text-lg px-10 py-4 rounded-full shadow-lg"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              transition={{ type: "spring", stiffness: 300 }}
+              className="bg-green-600 text-white font-bold text-lg px-10 py-4 rounded-full shadow-lg hover:scale-[1.05] active:scale-[0.95] transition-transform duration-300"
+              // Removed framer-motion props: whileHover whileTap transition
             >
               Calculate Your Dosha
-            </motion.button>
+            </button>
           </div>
-        </motion.div>
-      </motion.div>
+        </div>
+      </div>
     </>
   );
 }
