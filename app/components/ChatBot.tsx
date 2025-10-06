@@ -169,7 +169,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center font-sans p-4">
+    <div className=" ">
       {/* Floating Bot Button */}
       <div
         className={`fixed bottom-6 right-6 z-50 bg-green-600 p-4 rounded-full shadow-xl cursor-pointer transition-transform duration-300 ${

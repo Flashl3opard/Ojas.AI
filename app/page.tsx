@@ -19,11 +19,10 @@ export default function Home() {
         <Hero />
         <Features />
         <DoshaEducation />
+        <ChatBot />
         <Conditions />
         <HowItWorks />
         <Footer />
-
-        <ChatBot />
       </main>
     </>
   );
