@@ -6,8 +6,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { Leaf } from "lucide-react";
 import { auth, db } from "../../firebase/ClientApp";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { doc, getDoc } from "firebase/firestore";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
 
 // Logo Component
 const Logo = () => (
@@ -20,15 +20,19 @@ const Logo = () => (
   </Link>
 );
 
-const LoginPage = () => {
+const SignupPage = () => {
   const router = useRouter();
+
+  const [fullName, setFullName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [userRole, setUserRole] = useState<"patient" | "doctor" | "admin" | "">(
     ""
   );
+  const [medicalLicenseNumber, setMedicalLicenseNumber] = useState("");
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!userRole) {
@@ -37,52 +41,56 @@ const LoginPage = () => {
     }
 
     try {
-      // 1️⃣ Sign in with Firebase Auth
-      const userCredential = await signInWithEmailAndPassword(
+      // 1️⃣ Create user in Firebase Auth
+      const userCredential = await createUserWithEmailAndPassword(
         auth,
         email,
         password
       );
       const uid = userCredential.user.uid;
 
-      // 2️⃣ Determine Firestore collection based on role
-      let collectionName = "";
-      if (userRole === "patient") collectionName = "patients";
-      else if (userRole === "doctor") collectionName = "doctors";
-      else if (userRole === "admin") collectionName = "admins";
+      // 2️⃣ Prepare Firestore user data
+      const userData: any = {
+        uid,
+        name: fullName,
+        email,
+        phoneNumber,
+        role: userRole,
+        createdAt: new Date().toISOString(),
+        profilePicture: "https://via.placeholder.com/40",
+      };
 
-      // 3️⃣ Fetch user data from Firestore
-      const userDocRef = doc(db, collectionName, uid);
-      const userSnap = await getDoc(userDocRef);
-
-      if (!userSnap.exists()) {
-        alert(
-          "No user data found in Firestore for this role. Please sign up first."
-        );
-        return;
+      if (userRole === "doctor") {
+        userData.medicalLicenseNumber = medicalLicenseNumber;
+        userData.patients = []; // initialize empty array for assigned patients
       }
 
-      const userData = userSnap.data();
+      // 3️⃣ Choose Firestore collection
+      const collectionName =
+        userRole === "doctor"
+          ? "doctors"
+          : userRole === "patient"
+          ? "patients"
+          : "admins";
 
-      // 4️⃣ Store in localStorage
+      // 4️⃣ Save user in Firestore
+      await setDoc(doc(db, collectionName, uid), userData);
+
+      // 5️⃣ Save locally
       localStorage.setItem("isLoggedIn", "true");
       localStorage.setItem("userRole", userRole);
       localStorage.setItem("userData", JSON.stringify(userData));
-
-      // 5️⃣ Redirect based on role
-      if (userRole === "doctor") {
-        router.push("/Dashboard");
-      } else if (userRole === "patient") {
-        router.push("/Dashboard-patient"); // 👈 updated route
-      } else {
-        router.push("#");
-      }
-
       window.dispatchEvent(new Event("loginStateChange"));
-      alert("Logged in successfully ✅");
+
+      alert("Registered successfully ✅");
+
+      // 6️⃣ Redirect by role
+      if (userRole === "doctor") router.push("/Dashboard");
+      else if (userRole === "patient") router.push("/Dashboard-patient");
+      else router.push("/admin-dashboard");
     } catch (error: any) {
-      console.error("Login error:", error);
-      alert(error.message || "Login failed.");
+      console.error("Signup error:", error);
+      alert(error.message || "Signup failed.");
     }
   };
 
@@ -100,16 +108,34 @@ const LoginPage = () => {
           />
         </div>
 
-        {/* Login Form */}
+        {/* Signup Form */}
         <div className="flex-1 w-full max-w-md p-6 bg-white rounded-xl shadow-md">
           <Logo />
           <h2 className="text-2xl font-bold text-gray-800 mb-8 mt-6">
-            Welcome Back
+            Create Your Account
           </h2>
 
-          <form onSubmit={handleLogin} className="space-y-5">
+          <form onSubmit={handleSignup} className="space-y-5">
             <input
               type="text"
+              placeholder="Full Name"
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
+              className="w-full py-3 px-4 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500"
+              required
+            />
+
+            <input
+              type="tel"
+              placeholder="Phone Number"
+              value={phoneNumber}
+              onChange={(e) => setPhoneNumber(e.target.value)}
+              className="w-full py-3 px-4 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500"
+              required
+            />
+
+            <input
+              type="email"
               placeholder="Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -140,21 +166,32 @@ const LoginPage = () => {
               <option value="admin">Admin</option>
             </select>
 
+            {userRole === "doctor" && (
+              <input
+                type="text"
+                placeholder="Medical License Number"
+                value={medicalLicenseNumber}
+                onChange={(e) => setMedicalLicenseNumber(e.target.value)}
+                className="w-full py-3 px-4 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500"
+                required
+              />
+            )}
+
             <button
               type="submit"
               className="w-full py-3 px-4 bg-green-600 text-white rounded-lg hover:bg-green-700"
             >
-              Sign In
+              Create Account
             </button>
           </form>
 
           <p className="mt-6 text-center text-gray-600">
-            Don't have an account?{" "}
+            Already have an account?{" "}
             <Link
-              href="/signup"
+              href="/login"
               className="text-green-600 font-medium hover:text-green-700"
             >
-              Sign Up
+              Sign In
             </Link>
           </p>
         </div>
@@ -163,4 +200,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default SignupPage;
