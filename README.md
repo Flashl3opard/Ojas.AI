@@ -1,28 +1,117 @@
-# Background
+# Ojas.AI
 
-Currently, in Ayurvedic hospitals, diet charts are prescribed manually by doctors in handwritten form, tailored to each patient’s needs. Existing software solutions primarily focus on macro- and micro-nutrient tracking but fail to align with Ayurvedic nutritional concepts. This gap creates inefficiencies, reduces accuracy, and makes it harder for practitioners to deliver holistic dietary care rooted in Ayurveda.
+Ojas.AI is a production-oriented AI diet planning platform for dietitians and patients.
 
-## Detailed Description
+## Tech Stack
 
-The problem envisages the development of a dedicated Ayurvedic Diet Management Software designed to efficiently create, manage, and organize patient-specific diet charts with both accuracy and ease. Unlike conventional nutrition tools, the platform will integrate modern nutritional metrics with Ayurvedic dietary principles—such as caloric value, food properties (Hot/Cold, Easy/Difficult to digest), and the six tastes (Rasa).
+- Frontend: Next.js (App Router), TypeScript, TailwindCSS, React Query, Zustand, Recharts
+- Backend: FastAPI, SQLAlchemy, PostgreSQL, Redis, JWT auth
+- AI: OpenAI API with deterministic fallback planner
+- Infra: Docker, docker-compose, environment-based config
 
-## Expected Solution
+## Core Features
 
-The proposed solution should provide an intuitive platform tailored for Ayurvedic dietitians, enabling quick food input, comprehensive nutrient tracking, and Ayurvedic dietary categorization.
+- Role-based authentication (`dietitian`, `patient`) with JWT
+- Dietitian dashboard:
+  - Create patient profiles
+  - View patient history
+  - Generate/regenerate AI diet plans
+  - Add patient progress logs
+  - Export plan as PDF
+- Patient dashboard:
+  - View daily meal cards and macros
+  - Track weight progress chart
+  - Weekly meal planner
+  - Grocery list generation
+  - Dark mode
 
-## Key Features:
+## Project Structure
 
-- Scientifically calculated nutrient data for diverse food categories, customized for men, women, and children across all age groups.
-- A dynamic food database of 8,000+ items covering Indian, multicultural, and international cuisines for wide applicability.
-- Automated diet chart generation with nutritionally balanced, Ayurveda-compliant plans in a clear, organized format.
-- Comprehensive patient management module, including profiles with age, gender, dietary habits, meal frequency, bowel movements, water intake, and other critical health parameters.
-- Recipe-based diet charts with automated nutrient analysis to provide detailed, actionable guidance for patients.
+```text
+.
+|-- app/                          # Next.js frontend
+|   |-- api/backend/[...path]/    # Proxy API layer to FastAPI
+|   |-- dashboard/dietitian/      # Dietitian dashboard UI
+|   |-- dashboard/patient/        # Patient dashboard UI
+|   |-- lib/                      # API client, state, types
+|-- backend/
+|   |-- app/
+|   |   |-- api/routes/           # FastAPI endpoints
+|   |   |-- core/                 # Settings and security
+|   |   |-- database/             # SQLAlchemy setup
+|   |   |-- models/               # ORM models
+|   |   |-- schemas/              # Pydantic schemas
+|   |   |-- services/             # AI and cache services
+|   |-- main.py                   # FastAPI entrypoint
+|-- docker-compose.yml
+```
 
-## Additional Features:
+## API Endpoints
 
-- Security & Compliance: Ensure patient data privacy, adhering to health data regulations (e.g., HIPAA or local laws).
-- User Experience (UX): A clean, user-friendly interface with customization to match Ayurvedic practitioners’ workflows.
-- Integration Potential: Capability to integrate with hospital information systems (HIS) or electronic health records (EHR).
-- Mobile Support: Compatibility with mobile and tablet devices for on-the-go usage by doctors and patients.
-- Reporting Tools: Ability to generate printable diet charts and reports for patient handouts.
-Author - ANSH BIRE
+- Auth
+  - `POST /auth/signup`
+  - `POST /auth/login`
+- Patients
+  - `POST /patients`
+  - `GET /patients`
+  - `GET /patients/{id}`
+- Diet plans
+  - `POST /diet/generate`
+  - `GET /diet/{patient_id}`
+  - `GET /diet/{patient_id}/weekly`
+  - `GET /diet/{patient_id}/grocery-list`
+- Progress
+  - `POST /progress`
+  - `GET /progress/{patient_id}`
+- Export
+  - `GET /export/diet/{patient_id}/pdf`
+
+## Local Setup
+
+### 1. Frontend
+
+```bash
+npm install
+npm run dev
+```
+
+Create `.env` in project root from `.env.example`:
+
+```bash
+NEXT_PUBLIC_API_BASE_URL=/api/backend
+BACKEND_INTERNAL_URL=http://localhost:8000
+```
+
+### 2. Backend
+
+```bash
+cd backend
+pip install -r requirements.txt
+uvicorn main:app --reload
+```
+
+Create `backend/.env` from `backend/.env.example`:
+
+```bash
+APP_NAME=Ojas.AI API
+ENVIRONMENT=development
+SECRET_KEY=replace-with-a-long-random-secret
+DATABASE_URL=postgresql+psycopg://postgres:postgres@localhost:5432/ojasai
+REDIS_URL=redis://localhost:6379/0
+LLM_PROVIDER=openai
+OPENAI_API_KEY=
+OPENAI_MODEL=gpt-4o-mini
+CORS_ORIGINS=http://localhost:3000
+```
+
+### 3. Infrastructure (PostgreSQL + Redis + app containers)
+
+```bash
+docker compose up --build
+```
+
+## Notes
+
+- If `OPENAI_API_KEY` is missing, the backend uses a deterministic nutrition fallback planner.
+- SQLAlchemy tables are auto-created on backend startup for rapid development.
+- For production hardening, add Alembic migrations, HTTPS termination, secret management, and structured logging.
