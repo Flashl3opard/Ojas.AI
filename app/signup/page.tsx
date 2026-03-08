@@ -2,200 +2,109 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
 import Link from "next/link";
-import { Leaf } from "lucide-react";
-import { auth, db } from "../../firebase/ClientApp";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
-
-// Logo Component
-const Logo = () => (
-  <Link href="/" className="hidden md:flex items-center space-x-2 group">
-    <Leaf className="w-7 h-7 text-green-600 transition-transform duration-300 group-hover:rotate-12 group-hover:scale-110" />
-    <span className="text-xl md:text-2xl font-extrabold">
-      <span className="text-green-600">Ojas</span>
-      <span className="text-black">.AI</span>
-    </span>
-  </Link>
-);
+import { apiClient } from "@/app/lib/api-client";
+import { useAuthStore } from "@/app/lib/store/auth-store";
+import { Button } from "@/app/components/ui/button";
+import { Card } from "@/app/components/ui/card";
+import { Input } from "@/app/components/ui/input";
 
 const SignupPage = () => {
   const router = useRouter();
+  const setAuth = useAuthStore((s) => s.setAuth);
 
   const [fullName, setFullName] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [userRole, setUserRole] = useState<"patient" | "doctor" | "admin" | "">(
-    ""
-  );
-  const [medicalLicenseNumber, setMedicalLicenseNumber] = useState("");
+  const [userRole, setUserRole] = useState<"dietitian" | "patient">("patient");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    if (!userRole) {
-      alert("Please select a role.");
-      return;
-    }
-
+    setLoading(true);
+    setError(null);
     try {
-      // 1️⃣ Create user in Firebase Auth
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      const uid = userCredential.user.uid;
-
-      // 2️⃣ Prepare Firestore user data
-      const userData: any = {
-        uid,
+      await apiClient.signup({
         name: fullName,
         email,
-        phoneNumber,
+        password,
         role: userRole,
-        createdAt: new Date().toISOString(),
-        profilePicture: "https://via.placeholder.com/40",
-      };
-
-      if (userRole === "doctor") {
-        userData.medicalLicenseNumber = medicalLicenseNumber;
-        userData.patients = []; // initialize empty array for assigned patients
-      }
-
-      // 3️⃣ Choose Firestore collection
-      const collectionName =
-        userRole === "doctor"
-          ? "doctors"
-          : userRole === "patient"
-          ? "patients"
-          : "admins";
-
-      // 4️⃣ Save user in Firestore
-      await setDoc(doc(db, collectionName, uid), userData);
-
-      // 5️⃣ Save locally
-      localStorage.setItem("isLoggedIn", "true");
-      localStorage.setItem("userRole", userRole);
-      localStorage.setItem("userData", JSON.stringify(userData));
-      window.dispatchEvent(new Event("loginStateChange"));
-
-      alert("Registered successfully ✅");
-
-      // 6️⃣ Redirect by role
-      if (userRole === "doctor") router.push("/Dashboard");
-      else if (userRole === "patient") router.push("/Dashboard-patient");
-      else router.push("/admin-dashboard");
-    } catch (error: any) {
-      console.error("Signup error:", error);
-      alert(error.message || "Signup failed.");
+      });
+      const loginResult = await apiClient.login({ email, password });
+      setAuth(loginResult.access_token, loginResult.role);
+      router.push(
+        loginResult.role === "dietitian"
+          ? "/dashboard/dietitian"
+          : "/dashboard/patient",
+      );
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Signup failed");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen p-4 bg-gray-50">
-      <div className="flex flex-col lg:flex-row items-center justify-center w-full max-w-5xl gap-12 lg:gap-16">
-        {/* Left image */}
-        <div className="hidden md:flex flex-1 justify-center items-center">
-          <Image
-            src="/images/image2.png"
-            alt="Ayurvedic Diet Illustration"
-            width={400}
-            height={400}
-            className="rounded-xl"
+    <div className="min-h-screen bg-gradient-to-b from-emerald-50 to-slate-100 px-4 py-16 dark:from-slate-950 dark:to-slate-900">
+      <Card className="mx-auto max-w-md">
+        <h1 className="text-2xl font-bold">Create your Ojas.AI account</h1>
+        <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">
+          Dietitians manage patients. Patients track their own plan and
+          progress.
+        </p>
+
+        <form onSubmit={handleSignup} className="mt-6 space-y-4">
+          <Input
+            type="text"
+            placeholder="Full Name"
+            value={fullName}
+            onChange={(e) => setFullName(e.target.value)}
+            required
           />
-        </div>
+          <Input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+          <Input
+            type="password"
+            placeholder="Password (min 8 chars)"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
 
-        {/* Signup Form */}
-        <div className="flex-1 w-full max-w-md p-6 bg-white rounded-xl shadow-md">
-          <Logo />
-          <h2 className="text-2xl font-bold text-gray-800 mb-8 mt-6">
-            Create Your Account
-          </h2>
+          <select
+            value={userRole}
+            onChange={(e) =>
+              setUserRole(e.target.value as "dietitian" | "patient")
+            }
+            className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm dark:border-slate-600 dark:bg-slate-800"
+          >
+            <option value="patient">Patient</option>
+            <option value="dietitian">Dietitian</option>
+          </select>
 
-          <form onSubmit={handleSignup} className="space-y-5">
-            <input
-              type="text"
-              placeholder="Full Name"
-              value={fullName}
-              onChange={(e) => setFullName(e.target.value)}
-              className="w-full py-3 px-4 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500"
-              required
-            />
+          {error && <p className="text-sm text-rose-600">{error}</p>}
 
-            <input
-              type="tel"
-              placeholder="Phone Number"
-              value={phoneNumber}
-              onChange={(e) => setPhoneNumber(e.target.value)}
-              className="w-full py-3 px-4 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500"
-              required
-            />
+          <Button type="submit" className="w-full" disabled={loading}>
+            {loading ? "Creating account..." : "Create Account"}
+          </Button>
+        </form>
 
-            <input
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full py-3 px-4 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500"
-              required
-            />
-
-            <input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full py-3 px-4 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500"
-              required
-            />
-
-            <select
-              value={userRole}
-              onChange={(e) =>
-                setUserRole(e.target.value as "patient" | "doctor" | "admin")
-              }
-              className="w-full py-3 px-4 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500"
-              required
-            >
-              <option value="">Select a role</option>
-              <option value="patient">Patient</option>
-              <option value="doctor">Doctor</option>
-              <option value="admin">Admin</option>
-            </select>
-
-            {userRole === "doctor" && (
-              <input
-                type="text"
-                placeholder="Medical License Number"
-                value={medicalLicenseNumber}
-                onChange={(e) => setMedicalLicenseNumber(e.target.value)}
-                className="w-full py-3 px-4 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500"
-                required
-              />
-            )}
-
-            <button
-              type="submit"
-              className="w-full py-3 px-4 bg-green-600 text-white rounded-lg hover:bg-green-700"
-            >
-              Create Account
-            </button>
-          </form>
-
-          <p className="mt-6 text-center text-gray-600">
-            Already have an account?{" "}
-            <Link
-              href="/login"
-              className="text-green-600 font-medium hover:text-green-700"
-            >
-              Sign In
-            </Link>
-          </p>
-        </div>
-      </div>
+        <p className="mt-6 text-center text-sm text-slate-600 dark:text-slate-300">
+          Already have an account?{" "}
+          <Link
+            href="/login"
+            className="font-medium text-emerald-600 hover:text-emerald-700"
+          >
+            Sign In
+          </Link>
+        </p>
+      </Card>
     </div>
   );
 };

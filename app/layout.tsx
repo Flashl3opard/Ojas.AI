@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Work_Sans } from "next/font/google";
 import "./globals.css";
 import AOSProvider from "./components/AOSProvider";
+import { QueryProvider } from "./lib/query-client";
+import ThemeSync from "./components/ThemeSync";
 
 // Work Sans font with normal and bold weights
 const workSans = Work_Sans({
@@ -23,8 +25,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${workSans.variable} antialiased`}>
-        <AOSProvider>{children}</AOSProvider>
+      <body
+        className={`${workSans.variable} antialiased bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100`}
+      >
+        <QueryProvider>
+          <ThemeSync />
+          <AOSProvider>{children}</AOSProvider>
+        </QueryProvider>
       </body>
     </html>
   );
